@@ -8,6 +8,7 @@ import { Toast } from "primereact/toast";
 import { useEffect, useRef, useState } from "react";
 import { CompanyService } from "@/demo/service/CompanyService";
 import type { Demo } from "@/types";
+
 type Company = Demo.Company;
 
 const CompanyPage = () => {
@@ -15,7 +16,13 @@ const CompanyPage = () => {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [viewDialog, setViewDialog] = useState(false);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [nameFilter, setNameFilter] = useState("");
+  
   const toast = useRef<Toast>(null);
+
+  const filteredCompany = companies.filter((company) =>
+    company.name.toLowerCase().includes(nameFilter.toLowerCase())
+  );
 
   useEffect(() => {
     CompanyService.getCompanies()
@@ -41,14 +48,16 @@ const CompanyPage = () => {
               <i className="pi pi-search" />
               <InputText
                 type="search"
-                onInput={(e) => setGlobalFilter(e.currentTarget.value)}
-                placeholder="ค้นหาชื่อบริษัท..."
+                placeholder="ค้นหาด้วยชื่อบริษัท..."
+                value={nameFilter}
+                onChange={(e) => setNameFilter(e.target.value)}
+                className="w-full"
               />
             </span>
           </div>
 
           <DataTable
-            value={companies}
+            value={filteredCompany}
             globalFilter={globalFilter}
             emptyMessage="No companies found"
           >
