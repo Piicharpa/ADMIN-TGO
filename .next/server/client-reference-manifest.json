@@ -16,6 +16,14 @@
         "async": false
       }
     },
+    "(app-client)/./node_modules/next/dist/client/components/layout-router.js": {
+      "*": {
+        "id": "(sc_client)/./node_modules/next/dist/client/components/layout-router.js",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
     "(app-client)/./node_modules/next/dist/client/components/render-from-template-context.js": {
       "*": {
         "id": "(sc_client)/./node_modules/next/dist/client/components/render-from-template-context.js",
@@ -32,9 +40,9 @@
         "async": false
       }
     },
-    "(app-client)/./node_modules/next/dist/client/components/layout-router.js": {
+    "(app-client)/./layout/layout.tsx": {
       "*": {
-        "id": "(sc_client)/./node_modules/next/dist/client/components/layout-router.js",
+        "id": "(sc_client)/./layout/layout.tsx",
         "name": "*",
         "chunks": [],
         "async": false
@@ -48,17 +56,25 @@
         "async": false
       }
     },
-    "(app-client)/./app/(main)/page.tsx": {
+    "(app-client)/./app/(main)/uikit/menu/verifier/page.tsx": {
       "*": {
-        "id": "(sc_client)/./app/(main)/page.tsx",
+        "id": "(sc_client)/./app/(main)/uikit/menu/verifier/page.tsx",
         "name": "*",
         "chunks": [],
         "async": false
       }
     },
-    "(app-client)/./layout/layout.tsx": {
+    "(app-client)/./app/(main)/uikit/formlayout/page.tsx": {
       "*": {
-        "id": "(sc_client)/./layout/layout.tsx",
+        "id": "(sc_client)/./app/(main)/uikit/formlayout/page.tsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./app/(main)/pages/crud/page.tsx": {
+      "*": {
+        "id": "(sc_client)/./app/(main)/pages/crud/page.tsx",
         "name": "*",
         "chunks": [],
         "async": false
@@ -99,6 +115,22 @@
       ],
       "async": false
     },
+    "/Users/piicharpa/ADMIN-TGO/node_modules/next/dist/client/components/layout-router.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/layout-router.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
+    "/Users/piicharpa/ADMIN-TGO/node_modules/next/dist/esm/client/components/layout-router.js": {
+      "id": "(app-client)/./node_modules/next/dist/client/components/layout-router.js",
+      "name": "*",
+      "chunks": [
+        "app-client-internals:static/chunks/app-client-internals.js"
+      ],
+      "async": false
+    },
     "/Users/piicharpa/ADMIN-TGO/node_modules/next/dist/client/components/render-from-template-context.js": {
       "id": "(app-client)/./node_modules/next/dist/client/components/render-from-template-context.js",
       "name": "*",
@@ -131,19 +163,11 @@
       ],
       "async": false
     },
-    "/Users/piicharpa/ADMIN-TGO/node_modules/next/dist/client/components/layout-router.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/components/layout-router.js",
+    "/Users/piicharpa/ADMIN-TGO/layout/layout.tsx": {
+      "id": "(app-client)/./layout/layout.tsx",
       "name": "*",
       "chunks": [
-        "app-client-internals:static/chunks/app-client-internals.js"
-      ],
-      "async": false
-    },
-    "/Users/piicharpa/ADMIN-TGO/node_modules/next/dist/esm/client/components/layout-router.js": {
-      "id": "(app-client)/./node_modules/next/dist/client/components/layout-router.js",
-      "name": "*",
-      "chunks": [
-        "app-client-internals:static/chunks/app-client-internals.js"
+        "app/(main)/layout:static/chunks/app/(main)/layout.js"
       ],
       "async": false
     },
@@ -155,28 +179,38 @@
       ],
       "async": false
     },
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/page.tsx": {
-      "id": "(app-client)/./app/(main)/page.tsx",
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/menu/verifier/page.tsx": {
+      "id": "(app-client)/./app/(main)/uikit/menu/verifier/page.tsx",
       "name": "*",
       "chunks": [
-        "app/(main)/page:static/chunks/app/(main)/page.js"
+        "app/(main)/uikit/menu/verifier/page:static/chunks/app/(main)/uikit/menu/verifier/page.js"
       ],
       "async": false
     },
-    "/Users/piicharpa/ADMIN-TGO/layout/layout.tsx": {
-      "id": "(app-client)/./layout/layout.tsx",
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/formlayout/page.tsx": {
+      "id": "(app-client)/./app/(main)/uikit/formlayout/page.tsx",
       "name": "*",
       "chunks": [
-        "app/(main)/layout:static/chunks/app/(main)/layout.js"
+        "app/(main)/uikit/formlayout/page:static/chunks/app/(main)/uikit/formlayout/page.js"
+      ],
+      "async": false
+    },
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/crud/page.tsx": {
+      "id": "(app-client)/./app/(main)/pages/crud/page.tsx",
+      "name": "*",
+      "chunks": [
+        "app/(main)/pages/crud/page:static/chunks/app/(main)/pages/crud/page.js"
       ],
       "async": false
     }
   },
   "entryCSSFiles": {
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/layout": [],
     "/Users/piicharpa/ADMIN-TGO/app/layout": [
       "static/css/app/layout.css"
     ],
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/page": [],
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/layout": []
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/menu/verifier/page": [],
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/formlayout/page": [],
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/crud/page": []
   }
 }

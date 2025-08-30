@@ -1,20 +1,30 @@
 {
   "pages": {
+    "/(main)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/layout.js"
+    ],
     "/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(main)/page": [
+    "/(main)/uikit/menu/verifier/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/page.js"
+      "static/chunks/app/(main)/uikit/menu/verifier/page.js"
     ],
-    "/(main)/layout": [
+    "/(main)/uikit/formlayout/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/layout.js"
+      "static/chunks/app/(main)/uikit/formlayout/page.js"
+    ],
+    "/(main)/pages/crud/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/pages/crud/page.js"
     ]
   }
 }
