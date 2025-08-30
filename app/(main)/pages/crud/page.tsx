@@ -9,9 +9,7 @@ import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-import { Rating } from 'primereact/rating';
 import { Toast } from 'primereact/toast';
-import { Toolbar } from 'primereact/toolbar';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { ProductService } from '../../../../demo/service/ProductService';
@@ -129,15 +127,6 @@ const Crud = () => {
         }
     };
 
-    const editProduct = (product: Demo.Product) => {
-        setProduct({ ...product });
-        setProductDialog(true);
-    };
-
-    const confirmDeleteProduct = (product: Demo.Product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
-    };
 
     const deleteProduct = () => {
         let _products = (products as any)?.filter((val: any) => val.id !== product.id);
@@ -177,12 +166,6 @@ const Crud = () => {
         setProduct(_product);
     };
 
-    const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
-        const val = e.value || 0;
-        let _product = { ...product };
-        _product[`${name}`] = val;
-        setProduct(_product);
-    };
 
     const createId = () => {
         let id = '';
@@ -231,7 +214,7 @@ const Crud = () => {
 
             <div className="col-12">
                 {/* Menu Cards */}
-                <div className="card bg-white p-5 rounded-lg shadow-md mb-4">
+                <div className="card bg-white p-6 rounded-lg shadow-md mb-4 width-full">
                     <h2 className="text-2xl font-medium mb-4 text-gray-800 border-bottom-1 border-gray-200 pb-2">จัดการระบบ</h2>
                     <div className="grid grid-nogutter md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
                         {/* Register Round Card */}
@@ -284,7 +267,7 @@ const Crud = () => {
                         {/* TGO Card */}
 
                         <div
-                            className={`shadow-2 p-3 h-full  border-round bg-white cursor-pointer flex flex-column align-items-center justify-content-center hover:shadow-8 transition-duration-150 ${
+                            className={`shadow-2 p-3 h-full w-2 border-round bg-white cursor-pointer flex flex-column align-items-center justify-content-center hover:shadow-8 transition-duration-150 ${
                                 activeContent === 'TGO' ? 'border-2 border-primary' : ''
                             }`}
                             onClick={() => navigateToMenu('TGO')}

@@ -1,448 +1,456 @@
-'use client';
-import { Button } from 'primereact/button';
-import { Column } from 'primereact/column';
-import { DataTable } from 'primereact/datatable';
-import { Dialog } from 'primereact/dialog';
-import { FileUpload } from 'primereact/fileupload';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-import { Rating } from 'primereact/rating';
-import { Toast } from 'primereact/toast';
-import { classNames } from 'primereact/utils';
-import React, { useEffect, useRef, useState } from 'react';
-import { ProductService } from '@/demo/service/ProductService';
-import { Demo } from '@/types';
-import { TabMenu } from 'primereact/tabmenu';
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { Button } from "primereact/button";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import { Toast } from "primereact/toast";
+import { classNames } from "primereact/utils";
+import { Dropdown } from "primereact/dropdown";
+import type { Demo } from "@/types";
+import { IndustrialService } from "@/demo/service/IndustrialService";
 
-const Industrial = () => {
-    let emptyProduct: Demo.Product = {
-        id: '',
-        name: '',
-        image: '',
-        description: '',
-        category: '',
-        price: 0,
-        quantity: 0,
-        rating: 0,
-        inventoryStatus: 'INSTOCK'
-    };
+type Industrial = Demo.Industrial;
 
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [products, setProducts] = useState(null);
-    const [productDialog, setProductDialog] = useState(false);
-    const [viewDialog, setViewDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-    const [product, setProduct] = useState<Demo.Product>(emptyProduct);
-    const [selectedProducts, setSelectedProducts] = useState(null);
-    const [submitted, setSubmitted] = useState(false);
-    const [globalFilter, setGlobalFilter] = useState('');
-    const [loading, setLoading] = useState(false);
-    const toast = useRef<Toast>(null);
-    const dt = useRef<DataTable<any>>(null);
+const IndustrialPage = () => {
+  const [industrials, setIndustrials] = useState<Industrial[]>([]);
+  const [industrial, setIndustrial] = useState<Industrial | null>(null);
+  const [selectedIndustrials, setSelectedIndustrials] = useState<
+    Industrial[] | null
+  >(null);
+  const [loading, setLoading] = useState(false);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const [nameFilter, setNameFilter] = useState("");
+  const [industrialDialog, setIndustrialDialog] = useState(false);
+  const [deleteIndustrialDialog, setDeleteIndustrialDialog] = useState(false);
+  const [deleteIndustrialsDialog, setDeleteIndustrialsDialog] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
-    // ดึงข้อมูลตาม tab ที่เลือก
-    const fetchData = (tabIndex: number) => {
-        setLoading(true);
+  const toast = useRef<Toast>(null);
+  const dt = useRef<DataTable<any>>(null);
 
-        // สำหรับการทดสอบใช้ ProductService ไปก่อน
-        // ในการใช้งานจริงให้เปลี่ยนเป็น fetch จาก endpoint จริง
-        ProductService.getProducts()
-            .then((data) => {
-                setProducts(data as any);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-                toast.current?.show({
-                    severity: 'error',
-                    summary: 'เกิดข้อผิดพลาด',
-                    detail: 'ไม่สามารถดึงข้อมูลได้',
-                    life: 3000
-                });
-                setLoading(false);
-            });
-    };
+  const emptyIndustrial: Industrial = {
+    industrial_id: 0,
+    industrial_name: "",
+    required_cbam: 0,
+  };
 
-    useEffect(() => {
-        // โหลดข้อมูลเมื่อเริ่มต้นและเมื่อเปลี่ยน tab
-        fetchData(activeIndex);
-    }, [activeIndex]);
+  const cbamOptions = [
+    { label: "มี", value: 1 },
+    { label: "ไม่มี", value: 0 },
+  ];
 
-    const formatCurrency = (value: number) => {
-        return value.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        });
-    };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    // แท็บเมนู
-    const wizardItems = [{ label: 'ทั้งหมด' }, { label: 'รอขึ้นทะเบียน' }, { label: 'ขึ้นทะเบียน' }];
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const data = await IndustrialService.getIndustrials();
+      setIndustrials(data);
+    } catch (error) {
+      toast.current?.show({
+        severity: "error",
+        summary: "Error",
+        detail: "ไม่สามารถโหลดข้อมูลได้",
+        life: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleTabChange = (e: any) => {
-        setActiveIndex(e.index);
-        // ข้อมูลจะถูกโหลดใหม่ใน useEffect ที่ขึ้นอยู่กับ activeIndex
-    };
+  // กรองข้อมูลตามชื่อ
+  const filteredIndustrials = industrials.filter((industrial) =>
+    industrial.industrial_name.toLowerCase().includes(nameFilter.toLowerCase())
+  );
 
-    const openNew = () => {
-        setProduct(emptyProduct);
-        setSubmitted(false);
-        setProductDialog(true);
-    };
+  const openNew = () => {
+    setIndustrial({ ...emptyIndustrial });
+    setSubmitted(false);
+    setIndustrialDialog(true);
+  };
 
-    const hideDialog = () => {
-        setSubmitted(false);
-        setProductDialog(false);
-    };
+  const hideDialog = () => {
+    setSubmitted(false);
+    setIndustrialDialog(false);
+    setIndustrial(null);
+  };
 
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
-    };
+  const hideDeleteIndustrialDialog = () => setDeleteIndustrialDialog(false);
+  const hideDeleteIndustrialsDialog = () => setDeleteIndustrialsDialog(false);
 
-    const hideDeleteProductsDialog = () => {
-        setDeleteProductsDialog(false);
-    };
+  const saveIndustrial = async () => {
+    setSubmitted(true);
+    if (!industrial || !industrial.industrial_name.trim()) return;
 
-    const saveProduct = () => {
-        setSubmitted(true);
-        if (product.name.trim()) {
-            let _products = [...(products as any)];
-            let _product = { ...product };
-            if (product.id) {
-                const index = findIndexById(product.id);
-                _products[index] = _product;
-                toast.current?.show({
-                    severity: 'success',
-                    summary: 'สำเร็จ',
-                    detail: 'อัพเดตข้อมูลอุตสาหกรรมแล้ว',
-                    life: 3000
-                });
-            } else {
-                _product.id = createId();
-                _product.image = 'product-placeholder.svg';
-                _products.push(_product);
-                toast.current?.show({
-                    severity: 'success',
-                    summary: 'สำเร็จ',
-                    detail: 'เพิ่มอุตสาหกรรมแล้ว',
-                    life: 3000
-                });
-            }
-            setProducts(_products as any);
-            setProductDialog(false);
-            setProduct(emptyProduct);
-        }
-    };
-
-    const editProduct = (product: Demo.Product) => {
-        setProduct({ ...product });
-        setProductDialog(true);
-    };
-
-    const viewProduct = (product: Demo.Product) => {
-        setProduct({ ...product });
-        setViewDialog(true);
-    };
-
-    const hideViewDialog = () => {
-        setViewDialog(false);
-    };
-
-    const confirmDeleteProduct = (product: Demo.Product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
-    };
-
-    const deleteProduct = () => {
-        let _products = (products as any)?.filter((val: any) => val.id !== product.id);
-        setProducts(_products);
-        setDeleteProductDialog(false);
-        setProduct(emptyProduct);
+    setLoading(true);
+    try {
+      if (industrial.industrial_id && industrial.industrial_id > 0) {
+        // update
+        const updated = await IndustrialService.updateUnit(industrial);
+        setIndustrials((prev) =>
+          prev.map((i) =>
+            i.industrial_id === updated.industrial_id ? updated : i
+          )
+        );
         toast.current?.show({
-            severity: 'success',
-            summary: 'สำเร็จ',
-            detail: 'ลบอุตสาหกรรมแล้ว',
-            life: 3000
+          severity: "success",
+          summary: "สำเร็จ",
+          detail: "แก้ไขข้อมูลแล้ว",
+          life: 3000,
         });
-    };
-
-    const findIndexById = (id: string) => {
-        let index = -1;
-        for (let i = 0; i < (products as any)?.length; i++) {
-            if ((products as any)[i].id === id) {
-                index = i;
-                break;
-            }
-        }
-        return index;
-    };
-
-    const createId = () => {
-        let id = '';
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        return id;
-    };
-
-    const exportCSV = () => {
-        dt.current?.exportCSV();
-    };
-
-    const confirmDeleteSelected = () => {
-        setDeleteProductsDialog(true);
-    };
-
-    const deleteSelectedProducts = () => {
-        let _products = (products as any)?.filter((val: any) => !(selectedProducts as any)?.includes(val));
-        setProducts(_products);
-        setDeleteProductsDialog(false);
-        setSelectedProducts(null);
+      } else {
+        // create
+        const created = await IndustrialService.createIndustrial(industrial);
+        setIndustrials((prev) => [...prev, created]);
         toast.current?.show({
-            severity: 'success',
-            summary: 'สำเร็จ',
-            detail: 'ลบอุตสาหกรรมที่เลือกแล้ว',
-            life: 3000
+          severity: "success",
+          summary: "สำเร็จ",
+          detail: "เพิ่มอุตสาหกรรมแล้ว",
+          life: 3000,
         });
-    };
+      }
+      setIndustrialDialog(false);
+      setIndustrial(null);
+      setSubmitted(false);
+    } catch {
+      toast.current?.show({
+        severity: "error",
+        summary: "Error",
+        detail: "เกิดข้อผิดพลาด",
+        life: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const onCategoryChange = (e: RadioButtonChangeEvent) => {
-        let _product = { ...product };
-        _product['category'] = e.value;
-        setProduct(_product);
-    };
+  const editIndustrial = (i: Industrial) => {
+    setIndustrial({ ...i });
+    setIndustrialDialog(true);
+  };
 
-    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
-        const val = (e.target && e.target.value) || '';
-        let _product = { ...product };
-        _product[`${name}`] = val;
-        setProduct(_product);
-    };
+  const confirmDeleteIndustrial = (i: Industrial) => {
+    setIndustrial(i);
+    setDeleteIndustrialDialog(true);
+  };
 
-    const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
-        const val = e.value || 0;
-        let _product = { ...product };
-        _product[`${name}`] = val;
-        setProduct(_product);
-    };
+  const deleteIndustrial = async () => {
+    if (!industrial) return;
+    setLoading(true);
+    try {
+      await IndustrialService.deleteUnit(industrial.industrial_id);
+      setIndustrials((prev) =>
+        prev.filter((i) => i.industrial_id !== industrial.industrial_id)
+      );
+      toast.current?.show({
+        severity: "success",
+        summary: "สำเร็จ",
+        detail: "ลบอุตสาหกรรมแล้ว",
+        life: 3000,
+      });
+      setIndustrial(null);
+      setDeleteIndustrialDialog(false);
+    } catch {
+      toast.current?.show({
+        severity: "error",
+        summary: "Error",
+        detail: "เกิดข้อผิดพลาด",
+        life: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const codeBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Code</span>
-                {rowData.code}
-            </>
-        );
-    };
+  const deleteSelectedIndustrials = async () => {
+    if (!selectedIndustrials) return;
+    setLoading(true);
+    try {
+      await Promise.all(
+        selectedIndustrials.map((i) =>
+          IndustrialService.deleteUnit(i.industrial_id)
+        )
+      );
+      setIndustrials((prev) =>
+        prev.filter((i) => !selectedIndustrials.includes(i))
+      );
+      toast.current?.show({
+        severity: "success",
+        summary: "สำเร็จ",
+        detail: "ลบรายการที่เลือกแล้ว",
+        life: 3000,
+      });
+      setSelectedIndustrials(null);
+      setDeleteIndustrialsDialog(false);
+    } catch {
+      toast.current?.show({
+        severity: "error",
+        summary: "Error",
+        detail: "เกิดข้อผิดพลาด",
+        life: 3000,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const nameBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Name</span>
-                {rowData.name}
-            </>
-        );
-    };
+  const onInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    name: string
+  ) => {
+    const val = e.target.value;
+    setIndustrial((prev) => (prev ? { ...prev, [name]: val } : null));
+  };
 
-    const imageBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Image</span>
-                <img src={`/demo/images/product/${rowData.image}`} alt={rowData.image} className="shadow-2" width="100" />
-            </>
-        );
-    };
+  const onDropdownChange = (e: { value: any }, name: string) => {
+    const val = e.value;
+    setIndustrial((prev) => (prev ? { ...prev, [name]: val } : null));
+  };
 
-    const priceBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Price</span>
-                {formatCurrency(rowData.price as number)}
-            </>
-        );
-    };
+  const actionBodyTemplate = (rowData: Industrial) => (
+    <div className="flex gap-1">
+      <Button
+        icon="pi pi-pencil"
+        rounded
+        severity="success"
+        onClick={() => editIndustrial(rowData)}
+        tooltip="แก้ไข"
+        tooltipOptions={{ position: 'top' }}
+      />
+      <Button
+        icon="pi pi-trash"
+        rounded
+        severity="danger"
+        onClick={() => confirmDeleteIndustrial(rowData)}
+        tooltip="ลบ"
+        tooltipOptions={{ position: 'top' }}
+      />
+    </div>
+  );
 
-    const categoryBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Category</span>
-                {rowData.category}
-            </>
-        );
-    };
+  const industrialDialogFooter = (
+    <div className="flex justify-end gap-2">
+      <Button label="ยกเลิก" icon="pi pi-times" outlined onClick={hideDialog} />
+      <Button label="บันทึก" icon="pi pi-check" onClick={saveIndustrial} />
+    </div>
+  );
 
-    const ratingBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Reviews</span>
-                <Rating value={rowData.rating} readOnly cancel={false} />
-            </>
-        );
-    };
+  const deleteIndustrialDialogFooter = (
+    <div className="flex justify-end gap-2">
+      <Button
+        label="ไม่"
+        icon="pi pi-times"
+        outlined
+        onClick={hideDeleteIndustrialDialog}
+      />
+      <Button label="ใช่" icon="pi pi-check" severity="danger" onClick={deleteIndustrial} />
+    </div>
+  );
 
-    const statusBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Status</span>
-                <span className={`product-badge status-${rowData.inventoryStatus?.toLowerCase()}`}>{rowData.inventoryStatus}</span>
-            </>
-        );
-    };
+  const deleteIndustrialsDialogFooter = (
+    <div className="flex justify-end gap-2">
+      <Button
+        label="ไม่"
+        icon="pi pi-times"
+        outlined
+        onClick={hideDeleteIndustrialsDialog}
+      />
+      <Button
+        label="ใช่"
+        icon="pi pi-check"
+        severity="danger"
+        onClick={deleteSelectedIndustrials}
+      />
+    </div>
+  );
 
-    const actionBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <Button icon="pi pi-eye" rounded severity="info" className="mr-2" onClick={() => viewProduct(rowData)} />
-                <Button icon="pi pi-pencil" rounded severity="success" className="mr-2" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDeleteProduct(rowData)} />
-            </>
-        );
-    };
-
-    const productDialogFooter = (
-        <>
-            <Button label="ยกเลิก" icon="pi pi-times" text onClick={hideDialog} />
-            <Button label="บันทึก" icon="pi pi-check" text onClick={saveProduct} />
-        </>
-    );
-
-    const deleteProductDialogFooter = (
-        <>
-            <Button label="ไม่" icon="pi pi-times" text onClick={hideDeleteProductDialog} />
-            <Button label="ใช่" icon="pi pi-check" text onClick={deleteProduct} />
-        </>
-    );
-
-    const deleteProductsDialogFooter = (
-        <>
-            <Button label="ไม่" icon="pi pi-times" text onClick={hideDeleteProductsDialog} />
-            <Button label="ใช่" icon="pi pi-check" text onClick={deleteSelectedProducts} />
-        </>
-    );
-
+  // Header สำหรับตาราง
+  const renderHeader = () => {
     return (
-        <div className="grid crud-demo">
-            <div className="col-12">
-                <div className="card">
-                    <Toast ref={toast} />
-
-                    <div className="flex justify-content-between align-items-center mb-4">
-                        <h5></h5>
-                        <div className="flex align-items-center">
-                            <span className="p-input-icon-left mr-3">
-                                <i className="pi pi-search" />
-                                <InputText type="search" onInput={(e) => setGlobalFilter(e.currentTarget.value)} placeholder="ค้นหา..." />
-                            </span>
-                            <Button label="เพิ่มอุตสาหกรรม" icon="pi pi-plus" severity="success" onClick={openNew} />
-                        </div>
-                    </div>
-
-                    {/* <TabMenu model={wizardItems} activeIndex={activeIndex} onTabChange={handleTabChange} /> */}
-
-                    <DataTable
-                        ref={dt}
-                        value={products}
-                        selection={selectedProducts}
-                        onSelectionChange={(e) => setSelectedProducts(e.value as any)}
-                        dataKey="id"
-                        paginator
-                        rows={10}
-                        rowsPerPageOptions={[5, 10, 25]}
-                        className="datatable-responsive"
-                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="แสดง {first} ถึง {last} จากทั้งหมด {totalRecords} รายการ"
-                        globalFilter={globalFilter}
-                        emptyMessage="ไม่พบข้อมูล"
-                        loading={loading}
-                        responsiveLayout="scroll"
-                    >
-                        <Column field="code" header="#"></Column>
-                        <Column field="name" header="ชื่ออุตสาหกรรม" sortable body={nameBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
-                        <Column header="รหัส" sortable body={codeBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
-                        <Column field="price" header="วันที่" body={priceBodyTemplate} sortable></Column>
-                        <Column body={actionBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
-                    </DataTable>
-
-                    {/* Dialog สำหรับเพิ่ม/แก้ไขอุตสาหกรรม */}
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="รายละเอียดอุตสาหกรรม" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                        {product.image && <img src={`/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
-                        <div className="field">
-                            <label htmlFor="name">ชื่อ</label>
-                            <InputText
-                                id="name"
-                                value={product.name}
-                                onChange={(e) => onInputChange(e, 'name')}
-                                required
-                                autoFocus
-                                className={classNames({
-                                    'p-invalid': submitted && !product.name
-                                })}
-                            />
-                            {submitted && !product.name && <small className="p-error">จำเป็นต้องกรอกชื่อ</small>}
-                        </div>
-                        <div className="field">
-                            <label htmlFor="description">รายละเอียด</label>
-                            <InputTextarea id="description" value={product.description} onChange={(e) => onInputChange(e, 'description')} required rows={3} cols={20} />
-                        </div>
-                        <div className="field">
-                            <label className="mb-3">ประเภท</label>
-                            <div className="formgrid grid">
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category1" name="category" value="ประเภท A" onChange={onCategoryChange} checked={product.category === 'ประเภท A'} />
-                                    <label htmlFor="category1">ประเภท A</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category2" name="category" value="ประเภท B" onChange={onCategoryChange} checked={product.category === 'ประเภท B'} />
-                                    <label htmlFor="category2">ประเภท B</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category3" name="category" value="ประเภท C" onChange={onCategoryChange} checked={product.category === 'ประเภท C'} />
-                                    <label htmlFor="category3">ประเภท C</label>
-                                </div>
-                                <div className="field-radiobutton col-6">
-                                    <RadioButton inputId="category4" name="category" value="ประเภท D" onChange={onCategoryChange} checked={product.category === 'ประเภท D'} />
-                                    <label htmlFor="category4">ประเภท D</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="formgrid grid">
-                            <div className="field col">
-                                <label htmlFor="price">ราคา</label>
-                                <InputNumber id="price" value={product.price} onValueChange={(e) => onInputNumberChange(e, 'price')} mode="currency" currency="THB" locale="th-TH" />
-                            </div>
-                            <div className="field col">
-                                <label htmlFor="quantity">จำนวน</label>
-                                <InputNumber id="quantity" value={product.quantity} onValueChange={(e) => onInputNumberChange(e, 'quantity')} />
-                            </div>
-                        </div>
-                    </Dialog>
-
-                    {/* Dialog ยืนยันลบอุตสาหกรรม */}
-                    <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="ยืนยัน" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
-                        <div className="flex align-items-center justify-content-center">
-                            <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {product && (
-                                <span>
-                                    คุณแน่ใจหรือไม่ว่าต้องการลบ <b>{product.name}</b>?
-                                </span>
-                            )}
-                        </div>
-                    </Dialog>
-
-                    {/* Dialog ยืนยันลบอุตสาหกรรมที่เลือก */}
-                    <Dialog visible={deleteProductsDialog} style={{ width: '450px' }} header="ยืนยัน" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
-                        <div className="flex align-items-center justify-content-center">
-                            <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {product && <span>คุณแน่ใจหรือไม่ว่าต้องการลบรายการที่เลือก?</span>}
-                        </div>
-                    </Dialog>
-                </div>
-            </div>
+      <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3">
+        <h2 className="m-0">จัดการอุตสาหกรรม</h2>
+        <div className="flex flex-column md:flex-row gap-3 w-full md:w-auto">
+          <span className="p-input-icon-left mr-3">
+            <i className="pi pi-search" />
+            <InputText
+              type="search"
+              placeholder="ค้นหาด้วยชื่อ..."
+              value={nameFilter}
+              onChange={(e) => setNameFilter(e.target.value)}
+              className="w-full"
+            />
+          </span>
+          <Button
+            label="เพิ่มอุตสาหกรรม"
+            icon="pi pi-plus"
+            severity="success"
+            onClick={openNew}
+          />
         </div>
+      </div>
     );
+  };
+
+  return (
+    <div className="grid">
+      <div className="col-12">
+        <div className="card p-4">
+          <Toast ref={toast} />
+
+          {renderHeader()}
+
+          <DataTable
+            ref={dt}
+            value={filteredIndustrials}
+            selection={selectedIndustrials}
+            onSelectionChange={(e: { value: Industrial[] }) =>
+              setSelectedIndustrials(e.value)
+            }
+            dataKey="industrial_id"
+            paginator
+            rows={10}
+            rowsPerPageOptions={[5, 10, 25]}
+            globalFilter={globalFilter}
+            emptyMessage="ไม่พบข้อมูล"
+            loading={loading}
+            responsiveLayout="scroll"
+            className="mt-4"
+            header={selectedIndustrials && selectedIndustrials.length > 0 ? (
+              <div className="flex justify-content-between align-items-center">
+                <span>{`เลือก ${selectedIndustrials.length} รายการ`}</span>
+                <Button
+                  label="ลบที่เลือก"
+                  icon="pi pi-trash"
+                  severity="danger"
+                  onClick={() => setDeleteIndustrialsDialog(true)}
+                />
+              </div>
+            ) : null}
+            selectionMode={selectedIndustrials ? 'checkbox' : null}
+          >
+            <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+            <Column
+              field="index"
+              header="ลำดับ"
+              body={(_, { rowIndex }) => rowIndex + 1}
+              style={{ width: '100px' }}
+            />
+
+            <Column
+              field="industrial_name"
+              header="ชื่ออุตสาหกรรม"
+              style={{ width: '200px' }}
+            ></Column>
+            <Column
+              field="required_cbam"
+              header="มี CBAM หรือไม่"
+              sortable
+              body={(rowData: Industrial) => rowData.required_cbam === 1 ? "มี" : "ไม่มี"}
+              style={{ width: '150px' }}
+            />
+            <Column
+              body={actionBodyTemplate}
+              header="การดำเนินการ"
+              headerStyle={{ width: '100px' }}
+              bodyStyle={{ textAlign: 'center' }}
+            ></Column>
+          </DataTable>
+
+          {/* Dialog เพิ่ม/แก้ไข */}
+          <Dialog
+            visible={industrialDialog}
+            style={{ width: "450px" }}
+            header="รายละเอียดอุตสาหกรรม"
+            modal
+            className="p-fluid"
+            footer={industrialDialogFooter}
+            onHide={hideDialog}
+          >
+            <div className="field mt-3">
+              <label htmlFor="industrial_name" className="font-bold">ชื่ออุตสาหกรรม *</label>
+              <InputText
+                id="industrial_name"
+                value={industrial?.industrial_name || ""}
+                onChange={(e) => onInputChange(e, "industrial_name")}
+                required
+                autoFocus
+                className={classNames({
+                  "p-invalid": submitted && !industrial?.industrial_name,
+                })}
+                placeholder="กรอกชื่ออุตสาหกรรม"
+              />
+              {submitted && !industrial?.industrial_name && (
+                <small className="p-error">จำเป็นต้องกรอกชื่ออุตสาหกรรม</small>
+              )}
+            </div>
+            <div className="field mt-3">
+              <label htmlFor="required_cbam" className="font-bold">มี CBAM หรือไม่ *</label>
+              <Dropdown
+                id="required_cbam"
+                value={industrial?.required_cbam}
+                options={cbamOptions}
+                onChange={(e) => onDropdownChange(e, "required_cbam")}
+                optionLabel="label"
+                optionValue="value"
+                placeholder="เลือกสถานะ CBAM"
+                className={classNames({
+                  "p-invalid": submitted && industrial?.required_cbam === undefined,
+                })}
+              />
+              {submitted && industrial?.required_cbam === undefined && (
+                <small className="p-error">จำเป็นต้องเลือกสถานะ CBAM</small>
+              )}
+            </div>
+          </Dialog>
+
+          {/* Dialog ลบ 1 */}
+          <Dialog
+            visible={deleteIndustrialDialog}
+            style={{ width: "450px" }}
+            header="ยืนยันการลบ"
+            modal
+            footer={deleteIndustrialDialogFooter}
+            onHide={hideDeleteIndustrialDialog}
+          >
+            <div className="flex align-items-center justify-content-center">
+              <i
+                className="pi pi-exclamation-triangle mr-3"
+                style={{ fontSize: "2rem", color: "var(--red-500)" }}
+              />
+              {industrial && (
+                <span>
+                  คุณแน่ใจหรือไม่ว่าต้องการลบ{" "}
+                  <b>{industrial.industrial_name}</b>?
+                </span>
+              )}
+            </div>
+          </Dialog>
+
+          {/* Dialog ลบหลายรายการ */}
+          <Dialog
+            visible={deleteIndustrialsDialog}
+            style={{ width: "450px" }}
+            header="ยืนยันการลบ"
+            modal
+            footer={deleteIndustrialsDialogFooter}
+            onHide={hideDeleteIndustrialsDialog}
+          >
+            <div className="flex align-items-center justify-content-center">
+              <i
+                className="pi pi-exclamation-triangle mr-3"
+                style={{ fontSize: "2rem", color: "var(--red-500)" }}
+              />
+              <span>คุณแน่ใจหรือไม่ว่าต้องการลบ {selectedIndustrials?.length} รายการที่เลือก?</span>
+            </div>
+          </Dialog>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default Industrial;
+export default IndustrialPage;

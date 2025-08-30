@@ -1,148 +1,116 @@
-'use client';
+"use client";
+import { Button } from "primereact/button";
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import { Toast } from "primereact/toast";
+import { useEffect, useRef, useState } from "react";
+import { CompanyService } from "@/demo/service/CompanyService";
+import type { Demo } from "@/types";
+type Company = Demo.Company;
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Dropdown } from 'primereact/dropdown';
+const CompanyPage = () => {
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
+  const [viewDialog, setViewDialog] = useState(false);
+  const [globalFilter, setGlobalFilter] = useState("");
+  const toast = useRef<Toast>(null);
 
-interface DropdownItem {
-    name: string;
-    code: string;
-}
+  useEffect(() => {
+    CompanyService.getCompanies()
+      .then(setCompanies)
+      .catch(() =>
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Could not fetch companies",
+          life: 3000,
+        })
+      );
+  }, []);
 
-const FormLayoutDemo = () => {
-    const [dropdownItem, setDropdownItem] = useState<DropdownItem | null>(null);
-    const dropdownItems: DropdownItem[] = useMemo(
-        () => [
-            { name: 'Option 1', code: 'Option 1' },
-            { name: 'Option 2', code: 'Option 2' },
-            { name: 'Option 3', code: 'Option 3' }
-        ],
-        []
-    );
+  return (
+    <div className="grid company-demo">
+      <div className="col-12">
+        <div className="card">
+          <Toast ref={toast} />
+          <div className="flex justify-content-between align-items-center mb-4">
+            <h5>บริษัท</h5>
+            <span className="p-input-icon-left mr-3">
+              <i className="pi pi-search" />
+              <InputText
+                type="search"
+                onInput={(e) => setGlobalFilter(e.currentTarget.value)}
+                placeholder="ค้นหาชื่อบริษัท..."
+              />
+            </span>
+          </div>
 
-    useEffect(() => {
-        setDropdownItem(dropdownItems[0]);
-    }, [dropdownItems]);
+          <DataTable
+            value={companies}
+            globalFilter={globalFilter}
+            emptyMessage="No companies found"
+          >
+            <Column
+              field="index"
+              header="ลำดับ"
+              body={(_, { rowIndex }) => rowIndex + 1}
+              style={{ width: "100px" }}
+            />
+            <Column field="name" header="ชื่อบริษัท" sortable />
+            <Column field="address" header="ที่อยู่" sortable />
+            <Column field="id" header="รหัส" sortable />
+            <Column
+              body={(rowData) => (
+                <Button
+                  icon="pi pi-eye"
+                  rounded
+                  severity="info"
+                  className="mr-2"
+                  onClick={() => {
+                    setSelectedCompany(rowData);
+                    setViewDialog(true);
+                  }}
+                />
+              )}
+            />
+          </DataTable>
 
-    return (
-        <div className="grid">
-            <div className="col-12 md:col-6">
-                <div className="card p-fluid">
-                    <h5>Vertical</h5>
-                    <div className="field">
-                        <label htmlFor="name1">Name</label>
-                        <InputText id="name1" type="text" />
-                    </div>
-                    <div className="field">
-                        <label htmlFor="email1">Email</label>
-                        <InputText id="email1" type="text" />
-                    </div>
-                    <div className="field">
-                        <label htmlFor="age1">Age</label>
-                        <InputText id="age1" type="text" />
-                    </div>
-                </div>
-
-                <div className="card p-fluid">
-                    <h5>Vertical Grid</h5>
-                    <div className="formgrid grid">
-                        <div className="field col">
-                            <label htmlFor="name2">Name</label>
-                            <InputText id="name2" type="text" />
-                        </div>
-                        <div className="field col">
-                            <label htmlFor="email2">Email</label>
-                            <InputText id="email2" type="text" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-12 md:col-6">
-                <div className="card p-fluid">
-                    <h5>Horizontal</h5>
-                    <div className="field grid">
-                        <label htmlFor="name3" className="col-12 mb-2 md:col-2 md:mb-0">
-                            Name
-                        </label>
-                        <div className="col-12 md:col-10">
-                            <InputText id="name3" type="text" />
-                        </div>
-                    </div>
-                    <div className="field grid">
-                        <label htmlFor="email3" className="col-12 mb-2 md:col-2 md:mb-0">
-                            Email
-                        </label>
-                        <div className="col-12 md:col-10">
-                            <InputText id="email3" type="text" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="card">
-                    <h5>Inline</h5>
-                    <div className="formgroup-inline">
-                        <div className="field">
-                            <label htmlFor="firstname1" className="p-sr-only">
-                                Firstname
-                            </label>
-                            <InputText id="firstname1" type="text" placeholder="Firstname" />
-                        </div>
-                        <div className="field">
-                            <label htmlFor="lastname1" className="p-sr-only">
-                                Lastname
-                            </label>
-                            <InputText id="lastname1" type="text" placeholder="Lastname" />
-                        </div>
-                        <Button label="Submit"></Button>
-                    </div>
-                </div>
-
-                <div className="card">
-                    <h5>Help Text</h5>
-                    <div className="field p-fluid">
-                        <label htmlFor="username">Username</label>
-                        <InputText id="username" type="text" />
-                        <small>Enter your username to reset your password.</small>
-                    </div>
-                </div>
-            </div>
-
-            <div className="col-12">
-                <div className="card">
-                    <h5>Advanced</h5>
-                    <div className="p-fluid formgrid grid">
-                        <div className="field col-12 md:col-6">
-                            <label htmlFor="firstname2">Firstname</label>
-                            <InputText id="firstname2" type="text" />
-                        </div>
-                        <div className="field col-12 md:col-6">
-                            <label htmlFor="lastname2">Lastname</label>
-                            <InputText id="lastname2" type="text" />
-                        </div>
-                        <div className="field col-12">
-                            <label htmlFor="address">Address</label>
-                            <InputTextarea id="address" rows={4} />
-                        </div>
-                        <div className="field col-12 md:col-6">
-                            <label htmlFor="city">City</label>
-                            <InputText id="city" type="text" />
-                        </div>
-                        <div className="field col-12 md:col-3">
-                            <label htmlFor="state">State</label>
-                            <Dropdown id="state" value={dropdownItem} onChange={(e) => setDropdownItem(e.value)} options={dropdownItems} optionLabel="name" placeholder="Select One"></Dropdown>
-                        </div>
-                        <div className="field col-12 md:col-3">
-                            <label htmlFor="zip">Zip</label>
-                            <InputText id="zip" type="text" />
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <Dialog
+            visible={viewDialog}
+            style={{ width: "800px" }}
+            header="Company Products"
+            modal
+            footer={
+              <Button
+                label="Close"
+                icon="pi pi-times"
+                onClick={() => setViewDialog(false)}
+              />
+            }
+            onHide={() => setViewDialog(false)}
+          >
+            {selectedCompany && (
+              <>
+                <h5>{selectedCompany.name}'s Products</h5>
+                <DataTable
+                  value={selectedCompany.products}
+                  paginator
+                  rows={5}
+                  emptyMessage="No products found."
+                >
+                  <Column field="id" header="รหัสผลิตภัณฑ์" sortable />
+                  <Column field="name" header="ชื่อผลิตภัณฑ์" sortable />
+                  <Column field="status" header="สถานะ" sortable />
+                </DataTable>
+              </>
+            )}
+          </Dialog>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
-export default FormLayoutDemo;
+export default CompanyPage;

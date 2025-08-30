@@ -1,78 +1,95 @@
 'use client';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'primereact/button';
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
-import { FileUpload } from 'primereact/fileupload';
-import { InputNumber, InputNumberValueChangeEvent } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
-import { Rating } from 'primereact/rating';
 import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
-import React, { useEffect, useRef, useState } from 'react';
-import { ProductService } from '@/demo/service/ProductService';
-import { Demo } from '@/types';
-import { TabMenu } from 'primereact/tabmenu';
 import { SelectButton } from 'primereact/selectbutton';
+import { VerifierService } from '@/demo/service/VerifierService';
 
-const Verifier = () => {
-    let emptyProduct: Demo.Product = {
-        id: '',
-        name: '',
-        image: '',
-        description: '',
-        category: '',
-        price: 0,
-        quantity: 0,
-        rating: 0,
-        inventoryStatus: 'INSTOCK'
-    };
+// Define the Verifier data structure with a new status property for tab filtering
+interface Verifier {
+    auditor_id: number;
+    user_id: number;
+    name: string;
+    register_id: string;
+    description: string;
+    expertise: string;
+    organization: string;
+    address: string;
+    subdistrict_id: number;
+    district_id: number;
+    province_id: number;
+    zipcode: number;
+    phone_number: string;
+    registration_date: string;
+    created_date: string;
+    updated_date: string;
+    prefix_name: string;
+    status: 'pending' | 'successful';
+}
 
+// Initial empty Verifier object
+const emptyVerifier: Verifier = {
+    auditor_id: 0,
+    user_id: 0,
+    name: '',
+    register_id: '',
+    description: '',
+    expertise: '',
+    organization: '',
+    address: '',
+    subdistrict_id: 0,
+    district_id: 0,
+    province_id: 0,
+    zipcode: 0,
+    phone_number: '',
+    registration_date: '',
+    created_date: '',
+    updated_date: '',
+    prefix_name: '',
+    status: 'pending'
+};
+
+const VerifierApp = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [products, setProducts] = useState(null);
+    const [verifiers, setVerifiers] = useState<Verifier[] | null>(null);
     const [viewDialog, setViewDialog] = useState(false);
-    const [productDialog, setProductDialog] = useState(false);
-    const [deleteProductDialog, setDeleteProductDialog] = useState(false);
-    const [deleteProductsDialog, setDeleteProductsDialog] = useState(false);
-    const [product, setProduct] = useState<Demo.Product>(emptyProduct);
-    const [selectedProducts, setSelectedProducts] = useState(null);
+    const [verifierDialog, setVerifierDialog] = useState(false);
+    const [deleteVerifierDialog, setDeleteVerifierDialog] = useState(false);
+    const [deleteVerifiersDialog, setDeleteVerifiersDialog] = useState(false);
+    const [verifier, setVerifier] = useState<Verifier>(emptyVerifier);
+    const [selectedVerifiers, setSelectedVerifiers] = useState<Verifier[] | null>(null);
     const [submitted, setSubmitted] = useState(false);
     const [globalFilter, setGlobalFilter] = useState('');
     const [loading, setLoading] = useState(false);
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<any>>(null);
 
-    // ดึงข้อมูลตาม tab ที่เลือก
+    // Fetch data based on the selected tab
     const fetchData = (tabIndex: number) => {
         setLoading(true);
-        let endpoint = '';
-
-        // เลือก endpoint ตาม tab
-        switch (tabIndex) {
-            case 0: // ทั้งหมด
-                endpoint = '/api/verifiers/all';
-                break;
-            case 1: // รอการพิจารณา
-                endpoint = '/api/verifiers/pending';
-                break;
-            case 2: // ได้รับการพิจารณาแล้ว
-                endpoint = '/api/verifiers/successful';
-                break;
-            default:
-                endpoint = '/api/verifiers/all';
-        }
-
-        // สำหรับการทดสอบใช้ ProductService ไปก่อน
-        // ในการใช้งานจริงให้เปลี่ยนเป็น fetch จาก endpoint จริง
-        ProductService.getProducts()
-            .then((data) => {
-                setProducts(data as any);
+        VerifierService.getVerifiers()
+            .then((data: Verifier[]) => {
+                let filteredData = data;
+                switch (tabIndex) {
+                    case 1: // รอการพิจารณา (Pending)
+                        filteredData = data.filter((v: Verifier) => v.status === 'pending');
+                        break;
+                    case 2: // ได้รับการพิจารณาแล้ว (Successful)
+                        filteredData = data.filter((v: Verifier) => v.status === 'successful');
+                        break;
+                    default: // ทั้งหมด (All)
+                        break;
+                }
+                setVerifiers(filteredData);
                 setLoading(false);
             })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
+            .catch(() => {
                 toast.current?.show({
                     severity: 'error',
                     summary: 'เกิดข้อผิดพลาด',
@@ -84,87 +101,85 @@ const Verifier = () => {
     };
 
     useEffect(() => {
-        // โหลดข้อมูลเมื่อเริ่มต้นและเมื่อเปลี่ยน tab
         fetchData(activeIndex);
     }, [activeIndex]);
 
-    const formatCurrency = (value: number) => {
-        return value.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        });
-    };
-
-    // แท็บเมนู
-    // const wizardItems = [{ label: 'ทั้งหมด' }, { label: 'รอการพิจารณา' }, { label: 'ได้รับการพิจารณาแล้ว' }];
+    // Tab menu options
     const tabOptions = [
         { label: 'ทั้งหมด', value: 0 },
         { label: 'รอการพิจารณา', value: 1 },
         { label: 'ได้รับการพิจารณาแล้ว', value: 2 }
     ];
 
-    const handleTabChange = (e: any) => {
-        setActiveIndex(e.index);
-        // ข้อมูลจะถูกโหลดใหม่ใน useEffect ที่ขึ้นอยู่กับ activeIndex
-    };
-
-    const openNew = () => {
-        setProduct(emptyProduct);
-        setSubmitted(false);
-        setProductDialog(true);
-    };
-
     const hideDialog = () => {
         setSubmitted(false);
-        setProductDialog(false);
+        setVerifierDialog(false);
     };
 
-    const hideDeleteProductDialog = () => {
-        setDeleteProductDialog(false);
+    const hideDeleteVerifierDialog = () => {
+        setDeleteVerifierDialog(false);
     };
 
-    const hideDeleteProductsDialog = () => {
-        setDeleteProductsDialog(false);
+    const hideDeleteVerifiersDialog = () => {
+        setDeleteVerifiersDialog(false);
     };
 
-    const saveProduct = () => {
+    const saveVerifier = () => {
         setSubmitted(true);
-        if (product.name.trim()) {
-            let _products = [...(products as any)];
-            let _product = { ...product };
-            if (product.id) {
-                const index = findIndexById(product.id);
-                _products[index] = _product;
-                toast.current?.show({
-                    severity: 'success',
-                    summary: 'สำเร็จ',
-                    detail: 'อัพเดตข้อมูลผู้ทวนสอบแล้ว',
-                    life: 3000
-                });
+        if (verifier.name.trim()) {
+            if (verifier.auditor_id) {
+                VerifierService.updateVerifier(verifier)
+                    .then(() => {
+                        fetchData(activeIndex);
+                        setVerifierDialog(false);
+                        setVerifier(emptyVerifier);
+                        toast.current?.show({
+                            severity: 'success',
+                            summary: 'สำเร็จ',
+                            detail: 'อัพเดตข้อมูลผู้ทวนสอบแล้ว',
+                            life: 3000
+                        });
+                    })
+                    .catch(() => {
+                        toast.current?.show({
+                            severity: 'error',
+                            summary: 'เกิดข้อผิดพลาด',
+                            detail: 'ไม่สามารถอัพเดตข้อมูลได้',
+                            life: 3000
+                        });
+                    });
             } else {
-                _product.id = createId();
-                _product.image = 'product-placeholder.svg';
-                _products.push(_product);
-                toast.current?.show({
-                    severity: 'success',
-                    summary: 'สำเร็จ',
-                    detail: 'เพิ่มผู้ทวนสอบแล้ว',
-                    life: 3000
-                });
+                VerifierService.createVerifier(verifier)
+                    .then(() => {
+                        fetchData(activeIndex);
+                        setVerifierDialog(false);
+                        setVerifier(emptyVerifier);
+                        toast.current?.show({
+                            severity: 'success',
+                            summary: 'สำเร็จ',
+                            detail: 'เพิ่มผู้ทวนสอบแล้ว',
+                            life: 3000
+                        });
+                    })
+                    .catch(() => {
+                        toast.current?.show({
+                            severity: 'error',
+                            summary: 'เกิดข้อผิดพลาด',
+                            detail: 'ไม่สามารถเพิ่มข้อมูลได้',
+                            life: 3000
+                        });
+                    });
             }
-            setProducts(_products as any);
-            setProductDialog(false);
-            setProduct(emptyProduct);
         }
     };
 
-    const editProduct = (product: Demo.Product) => {
-        setProduct({ ...product });
-        setProductDialog(true);
+    const editVerifier = (verifier: Verifier) => {
+        setVerifier({ ...verifier });
+        setVerifierDialog(true);
     };
 
-    const viewProduct = (product: Demo.Product) => {
-        setProduct({ ...product });
+    const viewVerifier = (verifier: Verifier) => {
+        setVerifier({ ...verifier });
         setViewDialog(true);
     };
 
@@ -172,173 +187,131 @@ const Verifier = () => {
         setViewDialog(false);
     };
 
-    const confirmDeleteProduct = (product: Demo.Product) => {
-        setProduct(product);
-        setDeleteProductDialog(true);
+    const confirmDeleteVerifier = (verifier: Verifier) => {
+        setVerifier(verifier);
+        setDeleteVerifierDialog(true);
     };
 
-    const deleteProduct = () => {
-        let _products = (products as any)?.filter((val: any) => val.id !== product.id);
-        setProducts(_products);
-        setDeleteProductDialog(false);
-        setProduct(emptyProduct);
-        toast.current?.show({
-            severity: 'success',
-            summary: 'สำเร็จ',
-            detail: 'ลบผู้ทวนสอบแล้ว',
-            life: 3000
-        });
-    };
-
-    const findIndexById = (id: string) => {
-        let index = -1;
-        for (let i = 0; i < (products as any)?.length; i++) {
-            if ((products as any)[i].id === id) {
-                index = i;
-                break;
-            }
+    const deleteVerifier = () => {
+        if (verifier.auditor_id) {
+            VerifierService.deleteVerifier(verifier.auditor_id)
+                .then(() => {
+                    fetchData(activeIndex);
+                    setDeleteVerifierDialog(false);
+                    setVerifier(emptyVerifier);
+                    toast.current?.show({
+                        severity: 'success',
+                        summary: 'สำเร็จ',
+                        detail: 'ลบผู้ทวนสอบแล้ว',
+                        life: 3000
+                    });
+                })
+                .catch(() => {
+                    toast.current?.show({
+                        severity: 'error',
+                        summary: 'เกิดข้อผิดพลาด',
+                        detail: 'ไม่สามารถลบข้อมูลได้',
+                        life: 3000
+                    });
+                });
         }
-        return index;
     };
 
-    const createId = () => {
-        let id = '';
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        for (let i = 0; i < 5; i++) {
-            id += chars.charAt(Math.floor(Math.random() * chars.length));
+    const deleteSelectedVerifiers = () => {
+        if (selectedVerifiers) {
+            Promise.all(selectedVerifiers.map(v => VerifierService.deleteVerifier(v.auditor_id)))
+                .then(() => {
+                    fetchData(activeIndex);
+                    setDeleteVerifiersDialog(false);
+                    setSelectedVerifiers(null);
+                    toast.current?.show({
+                        severity: 'success',
+                        summary: 'สำเร็จ',
+                        detail: 'ลบผู้ทวนสอบที่เลือกแล้ว',
+                        life: 3000
+                    });
+                })
+                .catch(() => {
+                    toast.current?.show({
+                        severity: 'error',
+                        summary: 'เกิดข้อผิดพลาด',
+                        detail: 'ไม่สามารถลบข้อมูลที่เลือกได้',
+                        life: 3000
+                    });
+                });
         }
-        return id;
     };
 
-    const exportCSV = () => {
-        dt.current?.exportCSV();
-    };
-
-    const confirmDeleteSelected = () => {
-        setDeleteProductsDialog(true);
-    };
-
-    const deleteSelectedProducts = () => {
-        let _products = (products as any)?.filter((val: any) => !(selectedProducts as any)?.includes(val));
-        setProducts(_products);
-        setDeleteProductsDialog(false);
-        setSelectedProducts(null);
-        toast.current?.show({
-            severity: 'success',
-            summary: 'สำเร็จ',
-            detail: 'ลบผู้ทวนสอบที่เลือกแล้ว',
-            life: 3000
-        });
-    };
-
-    const onCategoryChange = (e: RadioButtonChangeEvent) => {
-        let _product = { ...product };
-        _product['category'] = e.value;
-        setProduct(_product);
-    };
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | { value: any }, name: string) => {
         const val = 'value' in e ? e.value : e.target?.value || '';
-        setProduct({ ...product, [name]: val });
+        setVerifier({ ...verifier, [name]: val });
     };
 
-    const onInputNumberChange = (e: InputNumberValueChangeEvent, name: string) => {
-        const val = e.value || 0;
-        let _product = { ...product };
-        _product[`${name}`] = val;
-        setProduct(_product);
-    };
-
-    const codeBodyTemplate = (rowData: Demo.Product) => {
+    // Table column templates
+    const auditorIdBodyTemplate = (rowData: Verifier) => {
         return (
             <>
-                <span className="p-column-title">Code</span>
-                {rowData.code}
+                <span className="p-column-title">รหัสผู้ทวนสอบ</span>
+                {rowData.auditor_id}
             </>
         );
     };
 
-    const nameBodyTemplate = (rowData: Demo.Product) => {
+    const nameBodyTemplate = (rowData: Verifier) => {
         return (
             <>
-                <span className="p-column-title">Name</span>
+                <span className="p-column-title">ชื่อ</span>
                 {rowData.name}
             </>
         );
     };
 
-    const imageBodyTemplate = (rowData: Demo.Product) => {
+    const registerIdBodyTemplate = (rowData: Verifier) => {
         return (
             <>
-                <span className="p-column-title">Image</span>
-                <img src={`/demo/images/product/${rowData.image}`} alt={rowData.image} className="shadow-2" width="100" />
+                <span className="p-column-title">รหัสการลงทะเบียน</span>
+                {rowData.register_id}
             </>
         );
     };
 
-    const priceBodyTemplate = (rowData: Demo.Product) => {
+    const registrationDateBodyTemplate = (rowData: Verifier) => {
         return (
             <>
-                <span className="p-column-title">Price</span>
-                {formatCurrency(rowData.price as number)}
+                <span className="p-column-title">วันที่ลงทะเบียน</span>
+                {rowData.registration_date}
             </>
         );
     };
 
-    const categoryBodyTemplate = (rowData: Demo.Product) => {
+    const actionBodyTemplate = (rowData: Verifier) => {
         return (
             <>
-                <span className="p-column-title">Category</span>
-                {rowData.category}
+                <Button icon="pi pi-eye" rounded severity="info" className="mr-2" onClick={() => viewVerifier(rowData)} />
+                <Button icon="pi pi-pencil" rounded severity="success" className="mr-2" onClick={() => editVerifier(rowData)} />
+                <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDeleteVerifier(rowData)} />
             </>
         );
     };
 
-    const ratingBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Reviews</span>
-                <Rating value={rowData.rating} readOnly cancel={false} />
-            </>
-        );
-    };
-
-    const statusBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <span className="p-column-title">Status</span>
-                <span className={`product-badge status-${rowData.inventoryStatus?.toLowerCase()}`}>{rowData.inventoryStatus}</span>
-            </>
-        );
-    };
-
-    const actionBodyTemplate = (rowData: Demo.Product) => {
-        return (
-            <>
-                <Button icon="pi pi-eye" rounded severity="info" className="mr-2" onClick={() => viewProduct(rowData)} />
-                <Button icon="pi pi-pencil" rounded severity="success" className="mr-2" onClick={() => editProduct(rowData)} />
-                <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDeleteProduct(rowData)} />
-            </>
-        );
-    };
-
-    const productDialogFooter = (
+    const verifierDialogFooter = (
         <>
             <Button label="ยกเลิก" icon="pi pi-times" text onClick={hideDialog} />
-            <Button label="บันทึก" icon="pi pi-check" text onClick={saveProduct} />
+            <Button label="บันทึก" icon="pi pi-check" text onClick={saveVerifier} />
         </>
     );
 
-    const deleteProductDialogFooter = (
+    const deleteVerifierDialogFooter = (
         <>
-            <Button label="ไม่" icon="pi pi-times" text onClick={hideDeleteProductDialog} />
-            <Button label="ใช่" icon="pi pi-check" text onClick={deleteProduct} />
+            <Button label="ไม่" icon="pi pi-times" text onClick={hideDeleteVerifierDialog} />
+            <Button label="ใช่" icon="pi pi-check" text onClick={deleteVerifier} />
         </>
     );
 
-    const deleteProductsDialogFooter = (
+    const deleteVerifiersDialogFooter = (
         <>
-            <Button label="ไม่" icon="pi pi-times" text onClick={hideDeleteProductsDialog} />
-            <Button label="ใช่" icon="pi pi-check" text onClick={deleteSelectedProducts} />
+            <Button label="ไม่" icon="pi pi-times" text onClick={hideDeleteVerifiersDialog} />
+            <Button label="ใช่" icon="pi pi-check" text onClick={deleteSelectedVerifiers} />
         </>
     );
 
@@ -353,21 +326,19 @@ const Verifier = () => {
                         <div className="flex align-items-center">
                             <span className="p-input-icon-left mr-3">
                                 <i className="pi pi-search" />
-                                <InputText type="search" onInput={(e) => setGlobalFilter(e.currentTarget.value)} placeholder="ค้นหา..." />
-                            </span>
-                            <Button label="เพิ่มผู้ทวนสอบ" icon="pi pi-plus" severity="success" onClick={openNew} />
+                                <InputText type="search" onInput={(e) => setGlobalFilter(e.currentTarget.value)} placeholder="ค้นหาชื่อผู้ทวนสอบ..." />
+                            </span>   
                         </div>
                     </div>
 
-                    {/* <TabMenu model={wizardItems} activeIndex={activeIndex} onTabChange={handleTabChange} /> */}
                     <SelectButton value={activeIndex} onChange={(e) => setActiveIndex(e.value)} options={tabOptions} optionLabel="label" className="mb-4 w-full md:w-auto" />
 
                     <DataTable
                         ref={dt}
-                        value={products}
-                        selection={selectedProducts}
-                        onSelectionChange={(e) => setSelectedProducts(e.value as any)}
-                        dataKey="id"
+                        value={verifiers}
+                        selection={selectedVerifiers}
+                        onSelectionChange={(e) => setSelectedVerifiers(e.value as Verifier[])}
+                        dataKey="auditor_id"
                         paginator
                         rows={10}
                         rowsPerPageOptions={[5, 10, 25]}
@@ -379,84 +350,155 @@ const Verifier = () => {
                         loading={loading}
                         responsiveLayout="scroll"
                     >
-                        <Column field="code" header="#"></Column>
+                        <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+                        <Column field="auditor_id" header="รหัสผู้ทวนสอบ" sortable body={auditorIdBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
                         <Column field="name" header="ชื่อผู้ทวนสอบ" sortable body={nameBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
-                        <Column header="รหัส" sortable body={codeBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
-                        <Column field="price" header="วันที่" body={priceBodyTemplate} sortable></Column>
+                        <Column field="register_id" header="รหัสการลงทะเบียน" sortable body={registerIdBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
+                        <Column field="registration_date" header="วันที่ลงทะเบียน" body={registrationDateBodyTemplate} sortable></Column>
                         <Column body={actionBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
                     </DataTable>
 
                     {/* Dialog สำหรับเพิ่ม/แก้ไขผู้ทวนสอบ */}
-                    <Dialog visible={productDialog} style={{ width: '450px' }} header="รายละเอียดผู้ทวนสอบ" modal className="p-fluid" footer={productDialogFooter} onHide={hideDialog}>
-                        {product.image && <img src={`/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
+                    <Dialog visible={verifierDialog} style={{ width: '450px' }} header="รายละเอียดผู้ทวนสอบ" modal className="p-fluid" footer={verifierDialogFooter} onHide={hideDialog}>
                         <div className="field">
                             <label htmlFor="name">ชื่อ</label>
                             <InputText
                                 id="name"
-                                value={product.name}
+                                value={verifier.name}
                                 onChange={(e) => onInputChange(e, 'name')}
                                 required
                                 autoFocus
                                 className={classNames({
-                                    'p-invalid': submitted && !product.name
+                                    'p-invalid': submitted && !verifier.name
                                 })}
                             />
-                            {submitted && !product.name && <small className="p-error">จำเป็นต้องกรอกชื่อ</small>}
+                            {submitted && !verifier.name && <small className="p-error">จำเป็นต้องกรอกชื่อ</small>}
                         </div>
                         <div className="field">
-                            <label htmlFor="verifier_id" className="block text-gray-700 font-medium mb-2">
-                                สถานะ
-                            </label>
-                            <SelectButton
-                                value={product.verifier_id}
-                                onChange={(e) => onInputChange(e, 'verifier_id')}
-                                options={[
-                                    { label: 'รับรอง', value: 'correct' },
-                                    { label: 'ไม่รับรอง', value: 'incorrect' }
-                                ]}
-                                className={classNames({ 'p-invalid': submitted && !product.verifier_id })}
+                            <label htmlFor="register_id">รหัสการลงทะเบียน</label>
+                            <InputText
+                                id="register_id"
+                                value={verifier.register_id}
+                                onChange={(e) => onInputChange(e, 'register_id')}
+                                required
+                                className={classNames({
+                                    'p-invalid': submitted && !verifier.register_id
+                                })}
                             />
-                            {submitted && !product.verifier_id && <small className="p-error mt-2 block">จำเป็นต้องเลือกสถานะ</small>}
+                            {submitted && !verifier.register_id && <small className="p-error">จำเป็นต้องกรอกรหัสการลงทะเบียน</small>}
+                        </div>
+                        <div className="field">
+                            <label htmlFor="prefix_name">คำนำหน้าชื่อ</label>
+                            <InputText
+                                id="prefix_name"
+                                value={verifier.prefix_name}
+                                onChange={(e) => onInputChange(e, 'prefix_name')}
+                            />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="description">รายละเอียด (อีเมล)</label>
+                            <InputText
+                                id="description"
+                                value={verifier.description}
+                                onChange={(e) => onInputChange(e, 'description')}
+                            />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="expertise">ความเชี่ยวชาญ</label>
+                            <InputText
+                                id="expertise"
+                                value={verifier.expertise}
+                                onChange={(e) => onInputChange(e, 'expertise')}
+                            />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="organization">องค์กร</label>
+                            <InputText
+                                id="organization"
+                                value={verifier.organization}
+                                onChange={(e) => onInputChange(e, 'organization')}
+                            />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="address">ที่อยู่</label>
+                            <InputTextarea
+                                id="address"
+                                rows={3}
+                                value={verifier.address}
+                                onChange={(e) => onInputChange(e, 'address')}
+                            />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="phone_number">เบอร์โทรศัพท์</label>
+                            <InputText
+                                id="phone_number"
+                                value={verifier.phone_number}
+                                onChange={(e) => onInputChange(e, 'phone_number')}
+                            />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="zipcode">รหัสไปรษณีย์</label>
+                            <InputText
+                                id="zipcode"
+                                value={verifier.zipcode.toString()}
+                                onChange={(e) => onInputChange({ value: parseInt(e.target.value) || 0 }, 'zipcode')}
+                            />
                         </div>
                     </Dialog>
 
+                    {/* Dialog สำหรับดูรายละเอียดผู้ทวนสอบ */}
                     <Dialog visible={viewDialog} style={{ width: '450px' }} header="รายละเอียดผู้ทวนสอบ" modal onHide={hideViewDialog}>
-                        {product.image && <img src={`/demo/images/product/${product.image}`} alt={product.image} width="150" className="mt-0 mx-auto mb-5 block shadow-2" />}
                         <div className="field">
+                            <label className="font-bold">รหัสผู้ทวนสอบ:</label>
+                            <div>{verifier.auditor_id || '-'}</div>
+                        </div>
+                        <div className="field mt-3">
                             <label className="font-bold">ชื่อ:</label>
-                            <div>{product.name || '-'}</div>
+                            <div>{verifier.name || '-'}</div>
                         </div>
                         <div className="field mt-3">
-                            <label className="font-bold">รหัส:</label>
-                            <div>{product.code || '-'}</div>
+                            <label className="font-bold">รหัสการลงทะเบียน:</label>
+                            <div>{verifier.register_id || '-'}</div>
                         </div>
                         <div className="field mt-3">
-                            <label className="font-bold">วันที่:</label>
-                            <div>{product.price}</div>
+                            <label className="font-bold">วันที่ลงทะเบียน:</label>
+                            <div>{verifier.registration_date || '-'}</div>
                         </div>
                         <div className="field mt-3">
-                            <label className="font-bold">สถานะ:</label>
-                            <div>{product.verifier_id === 'correct' ? 'รับรอง' : product.verifier_id === 'incorrect' ? 'ไม่รับรอง' : '-'}</div>
+                            <label className="font-bold">อีเมล:</label>
+                            <div>{verifier.description || '-'}</div>
+                        </div>
+                        <div className="field mt-3">
+                            <label className="font-bold">ความเชี่ยวชาญ:</label>
+                            <div>{verifier.expertise || '-'}</div>
+                        </div>
+                        <div className="field mt-3">
+                            <label className="font-bold">องค์กร:</label>
+                            <div>{verifier.organization || '-'}</div>
+                        </div>
+                        <div className="field mt-3">
+                            <label className="font-bold">ที่อยู่:</label>
+                            <div>{verifier.address || '-'}</div>
                         </div>
                     </Dialog>
 
                     {/* Dialog ยืนยันลบผู้ทวนสอบ */}
-                    <Dialog visible={deleteProductDialog} style={{ width: '450px' }} header="ยืนยัน" modal footer={deleteProductDialogFooter} onHide={hideDeleteProductDialog}>
+                    <Dialog visible={deleteVerifierDialog} style={{ width: '450px' }} header="ยืนยัน" modal footer={deleteVerifierDialogFooter} onHide={hideDeleteVerifierDialog}>
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {product && (
+                            {verifier && (
                                 <span>
-                                    คุณแน่ใจหรือไม่ว่าต้องการลบ <b>{product.name}</b>?
+                                    คุณแน่ใจหรือไม่ว่าต้องการลบ <b>{verifier.name}</b>?
                                 </span>
                             )}
                         </div>
                     </Dialog>
 
                     {/* Dialog ยืนยันลบผู้ทวนสอบที่เลือก */}
-                    <Dialog visible={deleteProductsDialog} style={{ width: '450px' }} header="ยืนยัน" modal footer={deleteProductsDialogFooter} onHide={hideDeleteProductsDialog}>
+                    <Dialog visible={deleteVerifiersDialog} style={{ width: '450px' }} header="ยืนยัน" modal footer={deleteVerifiersDialogFooter} onHide={hideDeleteVerifiersDialog}>
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
-                            {product && <span>คุณแน่ใจหรือไม่ว่าต้องการลบรายการที่เลือก?</span>}
+                            {selectedVerifiers && <span>คุณแน่ใจหรือไม่ว่าต้องการลบรายการที่เลือก?</span>}
                         </div>
                     </Dialog>
                 </div>
@@ -465,4 +507,4 @@ const Verifier = () => {
     );
 };
 
-export default Verifier;
+export default VerifierApp;
