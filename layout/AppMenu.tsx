@@ -13,9 +13,9 @@ const AppMenu = () => {
         {
             label: '',
             items: [{ label: 'หน้าหลัก', icon: 'pi pi-fw pi-home', to: '/' },
-                    { label: 'จัดการข้อมูล', icon: 'pi pi-fw pi-list', to: '/pages/crud' },
-                    { label: 'จัดการผู้ทวนสอบ', icon: 'pi pi-fw pi-id-card', to: '/uikit/menu/verifier' },
-                    { label: 'จัดการผู้ใช้งาน/บริษัท', icon: 'pi pi-fw pi-building', to: '/uikit/formlayout' }
+                    { label: 'จัดการข้อมูล', icon: 'pi pi-fw pi-list', to: '/pages/menu/manage_info' },
+                    { label: 'จัดการผู้ทวนสอบ', icon: 'pi pi-fw pi-id-card', to: '/pages/menu/verifier' },
+                    { label: 'จัดการผู้ใช้งาน/บริษัท', icon: 'pi pi-fw pi-building', to: '/pages/menu/company' }
 
             ]
         },

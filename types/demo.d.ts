@@ -1,5 +1,5 @@
 /* FullCalendar Types */
-import Verifier from "@/app/(main)/uikit/menu/verifier/page";
+import Verifier from "@/app/(main)/pages/menu/verifier/page";
 import { EventApi, EventInput } from "@fullcalendar/core";
 
 /* Chart.js Types */

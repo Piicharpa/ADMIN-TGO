@@ -1,14 +1,9 @@
 {
   "pages": {
-    "/(main)/uikit/menu/verifier/page": [
+    "/(main)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/uikit/menu/verifier/page.js"
-    ],
-    "/(main)/layout": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(main)/layout.js"
+      "static/chunks/app/(main)/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -16,20 +11,25 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(main)/uikit/formlayout/page": [
+    "/(main)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/uikit/formlayout/page.js"
+      "static/chunks/app/(main)/layout.js"
     ],
-    "/(main)/pages/crud/page": [
+    "/(main)/pages/menu/company/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/pages/crud/page.js"
+      "static/chunks/app/(main)/pages/menu/company/page.js"
     ],
-    "/(main)/page": [
+    "/(main)/pages/menu/verifier/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/page.js"
+      "static/chunks/app/(main)/pages/menu/verifier/page.js"
+    ],
+    "/(main)/pages/menu/manage_info/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(main)/pages/menu/manage_info/page.js"
     ]
   }
 }

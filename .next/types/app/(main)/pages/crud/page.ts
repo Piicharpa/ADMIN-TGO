@@ -1,8 +1,8 @@
 // File: /Users/piicharpa/ADMIN-TGO/app/(main)/pages/crud/page.tsx
-import * as entry from '../../../../../../app/(main)/pages/crud/page.js'
+import * as entry from '../../../../../../app/(main)/pages/menu/manage_info/page.jsx'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../../../app/(main)/pages/crud/page.js')
+type TEntry = typeof import('../../../../../../app/(main)/pages/menu/manage_info/page.jsx')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{

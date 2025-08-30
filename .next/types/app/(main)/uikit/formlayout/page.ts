@@ -1,8 +1,8 @@
 // File: /Users/piicharpa/ADMIN-TGO/app/(main)/uikit/formlayout/page.tsx
-import * as entry from '../../../../../../app/(main)/uikit/formlayout/page.js'
+import * as entry from '../../../../../../app/(main)/pages/menu/company/page.jsx'
 import type { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
-type TEntry = typeof import('../../../../../../app/(main)/uikit/formlayout/page.js')
+type TEntry = typeof import('../../../../../../app/(main)/pages/menu/company/page.jsx')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{
