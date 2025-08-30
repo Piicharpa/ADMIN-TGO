@@ -328,13 +328,25 @@ const UnitPage = () => {
             />
             <Column
               field="product_unit_name_th"
-              header="ชื่อหน่วย"
+              header="ชื่อหน่วยภาษาไทย"
+              sortable
+              style={{ width: "200px" }}
+            ></Column>
+            <Column
+              field="product_unit_name_en"
+              header="ชื่อหน่วยภาษาอังกฤษ"
               sortable
               style={{ width: "200px" }}
             ></Column>
             <Column
               field="product_unit_abbr_th"
-              header="รหัสย่อ"
+              header="ชื่อย่อหน่วยภาษาไทย"
+              sortable
+              style={{ width: "200px" }}
+            ></Column>
+            <Column
+              field="product_unit_abbr_eng"
+              header="ชื่อย่อหน่วยภาษาอังกฤษ"
               sortable
               style={{ width: "200px" }}
             ></Column>

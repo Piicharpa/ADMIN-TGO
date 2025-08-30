@@ -1,5 +1,6 @@
 {
-  "/(main)/uikit/formlayout/page": "app/(main)/uikit/formlayout/page.js",
+  "/(main)/page": "app/(main)/page.js",
   "/(main)/pages/crud/page": "app/(main)/pages/crud/page.js",
+  "/(main)/uikit/formlayout/page": "app/(main)/uikit/formlayout/page.js",
   "/(main)/uikit/menu/verifier/page": "app/(main)/uikit/menu/verifier/page.js"
 }

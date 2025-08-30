@@ -40,6 +40,14 @@
         "async": false
       }
     },
+    "(app-client)/./app/(main)/uikit/menu/verifier/page.tsx": {
+      "*": {
+        "id": "(sc_client)/./app/(main)/uikit/menu/verifier/page.tsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
     "(app-client)/./layout/layout.tsx": {
       "*": {
         "id": "(sc_client)/./layout/layout.tsx",
@@ -56,14 +64,6 @@
         "async": false
       }
     },
-    "(app-client)/./app/(main)/uikit/menu/verifier/page.tsx": {
-      "*": {
-        "id": "(sc_client)/./app/(main)/uikit/menu/verifier/page.tsx",
-        "name": "*",
-        "chunks": [],
-        "async": false
-      }
-    },
     "(app-client)/./app/(main)/uikit/formlayout/page.tsx": {
       "*": {
         "id": "(sc_client)/./app/(main)/uikit/formlayout/page.tsx",
@@ -75,6 +75,14 @@
     "(app-client)/./app/(main)/pages/crud/page.tsx": {
       "*": {
         "id": "(sc_client)/./app/(main)/pages/crud/page.tsx",
+        "name": "*",
+        "chunks": [],
+        "async": false
+      }
+    },
+    "(app-client)/./app/(main)/page.tsx": {
+      "*": {
+        "id": "(sc_client)/./app/(main)/page.tsx",
         "name": "*",
         "chunks": [],
         "async": false
@@ -163,6 +171,14 @@
       ],
       "async": false
     },
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/menu/verifier/page.tsx": {
+      "id": "(app-client)/./app/(main)/uikit/menu/verifier/page.tsx",
+      "name": "*",
+      "chunks": [
+        "app/(main)/uikit/menu/verifier/page:static/chunks/app/(main)/uikit/menu/verifier/page.js"
+      ],
+      "async": false
+    },
     "/Users/piicharpa/ADMIN-TGO/layout/layout.tsx": {
       "id": "(app-client)/./layout/layout.tsx",
       "name": "*",
@@ -176,14 +192,6 @@
       "name": "*",
       "chunks": [
         "app/layout:static/chunks/app/layout.js"
-      ],
-      "async": false
-    },
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/menu/verifier/page.tsx": {
-      "id": "(app-client)/./app/(main)/uikit/menu/verifier/page.tsx",
-      "name": "*",
-      "chunks": [
-        "app/(main)/uikit/menu/verifier/page:static/chunks/app/(main)/uikit/menu/verifier/page.js"
       ],
       "async": false
     },
@@ -202,15 +210,24 @@
         "app/(main)/pages/crud/page:static/chunks/app/(main)/pages/crud/page.js"
       ],
       "async": false
+    },
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/page.tsx": {
+      "id": "(app-client)/./app/(main)/page.tsx",
+      "name": "*",
+      "chunks": [
+        "app/(main)/page:static/chunks/app/(main)/page.js"
+      ],
+      "async": false
     }
   },
   "entryCSSFiles": {
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/menu/verifier/page": [],
     "/Users/piicharpa/ADMIN-TGO/app/(main)/layout": [],
     "/Users/piicharpa/ADMIN-TGO/app/layout": [
       "static/css/app/layout.css"
     ],
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/menu/verifier/page": [],
     "/Users/piicharpa/ADMIN-TGO/app/(main)/uikit/formlayout/page": [],
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/crud/page": []
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/crud/page": [],
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/page": []
   }
 }

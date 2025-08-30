@@ -279,7 +279,7 @@ const PCRManagement = () => {
             />
           </span>
           <Button
-            label="เพิ่ม ข้อกำหนดผลิตภัณฑ์"
+            label="เพิ่มข้อกำหนดผลิตภัณฑ์"
             icon="pi pi-plus"
             severity="success"
             onClick={openNew}
