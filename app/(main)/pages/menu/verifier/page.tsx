@@ -419,12 +419,11 @@ const VerifierApp = () => {
               headerStyle={{ width: "3rem" }}
             ></Column>
             <Column
-              field="auditor_id"
-              header="รหัสผู้ทวนสอบ"
-              sortable
-              body={auditorIdBodyTemplate}
-              headerStyle={{ minWidth: "15rem" }}
-            ></Column>
+              field="index"
+              header="ลำดับ"
+              body={(_, { rowIndex }) => rowIndex + 1}
+              style={{ minWidth: "15rem" }}
+            />
             <Column
               field="name"
               header="ชื่อผู้ทวนสอบ"

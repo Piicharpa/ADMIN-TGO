@@ -219,7 +219,7 @@ const Crud = () => {
                             <span className="bg-orange-100 border-circle p-3 mb-3">
                                 <i className="pi pi-sliders-h text-orange-500 text-xl"></i>
                             </span>
-                            <div className="text-900 font-medium mb-2 text-center">หน่วย</div>
+                            <div className="text-900 font-medium mb-2 text-center">หน่วยวัด</div>
                             <span className="text-600 text-sm text-center">การจัดการข้อมูลหน่วย</span>
                         </div>
 
