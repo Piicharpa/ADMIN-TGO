@@ -1,5 +1,5 @@
 {
-  "/(main)/pages/menu/verifier/page": "app/(main)/pages/menu/verifier/page.js",
   "/(main)/pages/menu/manage_info/page": "app/(main)/pages/menu/manage_info/page.js",
+  "/(main)/pages/menu/verifier/page": "app/(main)/pages/menu/verifier/page.js",
   "/(main)/pages/menu/company/page": "app/(main)/pages/menu/company/page.js"
 }

@@ -15,7 +15,7 @@ const CompanyPage = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [viewDialog, setViewDialog] = useState(false);
-  const [globalFilter, setGlobalFilter] = useState("");
+  const [globalFilter] = useState("");
   const [nameFilter, setNameFilter] = useState("");
   
   const toast = useRef<Toast>(null);

@@ -9,7 +9,6 @@ import AddEditDialog from "../../../../(full-page)/component/dialog/round";
 import DeleteDialog from "../../../../(full-page)/component/dialog/Delete";
 import { RoundService } from "@/demo/service/RoundService";
 import type { Demo } from "@/types";
-
 type Round = Demo.Round;
 
 const Register_round = () => {
@@ -116,6 +115,7 @@ const Register_round = () => {
         });
       }
 
+      fetchRounds();
       setRoundDialog(false);
       setCurrentRound(emptyRound);
       setSubmitted(false);

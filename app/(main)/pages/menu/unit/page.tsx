@@ -93,6 +93,7 @@ const UnitPage = () => {
           life: 3000,
         });
       }
+      fetchData();
       setUnitDialog(false);
       setUnit(null);
     } catch (error) {
@@ -171,7 +172,7 @@ const UnitPage = () => {
     name: string
   ) => {
     const val = e.target.value;
-    setUnit((prev) => (prev ? { ...prev, [name]: val } : null));
+    setUnit((prev: Unit|null) => (prev ? { ...prev, [name]: val } : null));
   };
   const actionBodyTemplate = (rowData: Unit) => (
     <div className="flex gap-1">

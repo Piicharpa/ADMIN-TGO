@@ -101,6 +101,7 @@ const IndustrialPage = () => {
           life: 3000,
         });
       }
+      fetchData();
       setIndustrialDialog(false);
       setIndustrial(null);
       setSubmitted(false);

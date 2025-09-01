@@ -98,6 +98,7 @@ const TGO = () => {
               detail: "อัพเดต EF แล้ว",
               life: 3000,
             });
+            fetchEfs();
             setEfDialog(false);
             setEf(emptyEf);
           })
