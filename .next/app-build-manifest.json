@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/(main)/layout": [
+    "/(main)/pages/menu/manage_info/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/layout.js"
+      "static/chunks/app/(main)/pages/menu/manage_info/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -11,25 +11,20 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(main)/pages/menu/verifier/page": [
+    "/(main)/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/pages/menu/verifier/page.js"
+      "static/chunks/app/(main)/layout.js"
     ],
     "/(main)/pages/menu/company/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(main)/pages/menu/company/page.js"
     ],
-    "/(main)/pages/menu/manage_info/page": [
+    "/(main)/pages/menu/verifier/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(main)/pages/menu/manage_info/page.js"
-    ],
-    "/(main)/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(main)/page.js"
+      "static/chunks/app/(main)/pages/menu/verifier/page.js"
     ]
   }
 }

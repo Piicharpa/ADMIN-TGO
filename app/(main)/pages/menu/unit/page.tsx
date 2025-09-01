@@ -2,10 +2,10 @@
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
-import { classNames } from "primereact/utils";
+import AddEditDialog from "../../../../(full-page)/component/dialog/unit";
+import DeleteDialog from "../../../../(full-page)/component/dialog/Delete";
 import React, { useEffect, useRef, useState } from "react";
 import { UnitService } from "@/demo/service/UnitService";
 import type { Demo } from "@/types";
@@ -23,14 +23,11 @@ const UnitPage = () => {
   const [deleteUnitDialog, setDeleteUnitDialog] = useState(false);
   const [deleteUnitsDialog, setDeleteUnitsDialog] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<any>>(null);
-
   useEffect(() => {
     fetchData();
   }, []);
-
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -47,12 +44,9 @@ const UnitPage = () => {
       setLoading(false);
     }
   };
-
-  // กรองข้อมูลตามชื่อ
   const filteredUnits = units.filter((unit) =>
-    unit.product_unit_name_th.toLowerCase().includes(nameFilter.toLowerCase())
+    unit.product_unit_name_th?.toLowerCase().includes(nameFilter.toLowerCase())
   );
-
   const openNew = () => {
     setUnit({
       product_unit_id: 0,
@@ -64,15 +58,12 @@ const UnitPage = () => {
     setSubmitted(false);
     setUnitDialog(true);
   };
-
   const hideDialog = () => {
     setSubmitted(false);
     setUnitDialog(false);
   };
-
   const hideDeleteUnitDialog = () => setDeleteUnitDialog(false);
   const hideDeleteUnitsDialog = () => setDeleteUnitsDialog(false);
-
   const saveUnit = async () => {
     setSubmitted(true);
     if (!unit || !unit.product_unit_name_th.trim()) return;
@@ -115,17 +106,14 @@ const UnitPage = () => {
       setLoading(false);
     }
   };
-
   const editUnit = (u: Unit) => {
     setUnit({ ...u });
     setUnitDialog(true);
   };
-
   const confirmDeleteUnit = (u: Unit) => {
     setUnit(u);
     setDeleteUnitDialog(true);
   };
-
   const deleteUnit = async () => {
     if (!unit) return;
     setLoading(true);
@@ -151,7 +139,6 @@ const UnitPage = () => {
       setLoading(false);
     }
   };
-
   const deleteSelectedUnits = async () => {
     if (!selectedUnits) return;
     setLoading(true);
@@ -179,7 +166,6 @@ const UnitPage = () => {
       setLoading(false);
     }
   };
-
   const onInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: string
@@ -187,7 +173,6 @@ const UnitPage = () => {
     const val = e.target.value;
     setUnit((prev) => (prev ? { ...prev, [name]: val } : null));
   };
-
   const actionBodyTemplate = (rowData: Unit) => (
     <div className="flex gap-1">
       <Button
@@ -208,49 +193,6 @@ const UnitPage = () => {
       />
     </div>
   );
-
-  const unitDialogFooter = (
-    <div className="flex justify-end gap-2">
-      <Button label="ยกเลิก" icon="pi pi-times" outlined onClick={hideDialog} />
-      <Button label="บันทึก" icon="pi pi-check" onClick={saveUnit} />
-    </div>
-  );
-
-  const deleteUnitDialogFooter = (
-    <div className="flex justify-end gap-2">
-      <Button
-        label="ไม่"
-        icon="pi pi-times"
-        outlined
-        onClick={hideDeleteUnitDialog}
-      />
-      <Button
-        label="ใช่"
-        icon="pi pi-check"
-        severity="danger"
-        onClick={deleteUnit}
-      />
-    </div>
-  );
-
-  const deleteUnitsDialogFooter = (
-    <div className="flex justify-end gap-2">
-      <Button
-        label="ไม่"
-        icon="pi pi-times"
-        outlined
-        onClick={hideDeleteUnitsDialog}
-      />
-      <Button
-        label="ใช่"
-        icon="pi pi-check"
-        severity="danger"
-        onClick={deleteSelectedUnits}
-      />
-    </div>
-  );
-
-  // Header สำหรับตาราง
   const renderHeader = () => {
     return (
       <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3">
@@ -358,90 +300,26 @@ const UnitPage = () => {
             ></Column>
           </DataTable>
 
-          <Dialog
+          <AddEditDialog
             visible={unitDialog}
-            style={{ width: "500px" }}
-            header="รายละเอียดหน่วย"
-            modal
-            className="p-fluid"
-            footer={unitDialogFooter}
+            unit={unit}
+            submitted={submitted}
             onHide={hideDialog}
-          >
-            <div className="field mt-3">
-              <label htmlFor="product_unit_name_th" className="font-bold">
-                ชื่อหน่วย (TH) *
-              </label>
-              <InputText
-                id="product_unit_name_th"
-                value={unit?.product_unit_name_th || ""}
-                onChange={(e) => onInputChange(e, "product_unit_name_th")}
-                required
-                autoFocus
-                className={classNames({
-                  "p-invalid": submitted && !unit?.product_unit_name_th,
-                })}
-                placeholder="กรอกชื่อหน่วย"
-              />
-              {submitted && !unit?.product_unit_name_th && (
-                <small className="p-error">จำเป็นต้องกรอกชื่อ</small>
-              )}
-            </div>
-            <div className="field mt-3">
-              <label htmlFor="product_unit_abbr_th" className="font-bold">
-                รหัสย่อ (TH)
-              </label>
-              <InputText
-                id="product_unit_abbr_th"
-                value={unit?.product_unit_abbr_th || ""}
-                onChange={(e) => onInputChange(e, "product_unit_abbr_th")}
-                placeholder="กรอกรหัสย่อ"
-              />
-            </div>
-          </Dialog>
-
-          <Dialog
+            onSave={saveUnit}
+            onChange={onInputChange}
+          />
+          <DeleteDialog
             visible={deleteUnitDialog}
-            style={{ width: "450px" }}
-            header="ยืนยันการลบ"
-            modal
-            footer={deleteUnitDialogFooter}
             onHide={hideDeleteUnitDialog}
-          >
-            <div className="flex align-items-center justify-content-center">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem", color: "var(--red-500)" }}
-              />
-              {unit && (
-                <span>
-                  คุณแน่ใจหรือไม่ว่าต้องการลบ <b>{unit.product_unit_name_th}</b>
-                  ?
-                </span>
-              )}
-            </div>
-          </Dialog>
-
-          <Dialog
+            onConfirm={deleteUnit}
+            message={`คุณแน่ใจหรือไม่ว่าต้องการลบ ${unit?.product_unit_name_th} รายการที่เลือก?`}
+          />
+          <DeleteDialog
             visible={deleteUnitsDialog}
-            style={{ width: "450px" }}
-            header="ยืนยันการลบ"
-            modal
-            footer={deleteUnitsDialogFooter}
             onHide={hideDeleteUnitsDialog}
-          >
-            <div className="flex align-items-center justify-content-center">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem", color: "var(--red-500)" }}
-              />
-              {selectedUnits && (
-                <span>
-                  คุณแน่ใจหรือไม่ว่าต้องการลบ {selectedUnits.length}{" "}
-                  รายการที่เลือก?
-                </span>
-              )}
-            </div>
-          </Dialog>
+            onConfirm={deleteSelectedUnits}
+            message={`คุณแน่ใจหรือไม่ว่าต้องการลบ ${selectedUnits?.length} รายการที่เลือก?`}
+          />
         </div>
       </div>
     </div>

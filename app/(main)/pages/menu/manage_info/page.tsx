@@ -11,11 +11,11 @@ import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '@/types';
 import { useRouter } from 'next/navigation';
-import Register_round from '../register_round/page';
+import Register_round from '../round/page';
 import Unit from '../unit/page';
 import Industrial from '../industrial/page';
-import TGO from '../TGO/page';
-import PCR from '../PCR/page';
+import TGO from '../ef/page';
+import PCR from '../pcr/page';
 
 const Crud = () => {
     // Product related state and functions

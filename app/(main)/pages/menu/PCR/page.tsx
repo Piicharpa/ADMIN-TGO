@@ -2,10 +2,10 @@
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
-import { classNames } from "primereact/utils";
+import AddEditDialog from "../../../../(full-page)/component/dialog/pcr";
+import DeleteDialog from "../../../../(full-page)/component/dialog/Delete";
 import React, { useEffect, useRef, useState } from "react";
 import { PCRService } from "@/demo/service/PCRService";
 import type { Demo } from "@/types";
@@ -19,7 +19,6 @@ const PCRManagement = () => {
     pcr_type: "",
     pcr_type_id: 0,
   };
-
   const [pcrs, setPCRs] = useState<PCR[]>([]);
   const [pcrDialog, setPCRDialog] = useState(false);
   const [selectedPCRs, setSelectedPCRs] = useState<PCR[] | null>(null);
@@ -28,12 +27,10 @@ const PCRManagement = () => {
   const [deletePCRsDialog, setDeletePCRsDialog] = useState(false);
   const [pcr, setPCR] = useState<PCR>(emptyPCR);
   const [submitted, setSubmitted] = useState(false);
-  const [globalFilter, setGlobalFilter] = useState("");
+  const [globalFilter] = useState("");
   const [nameFilter, setNameFilter] = useState("");
   const toast = useRef<Toast>(null);
   const dt = useRef<DataTable<any>>(null);
-
-  // ดึงข้อมูล PCR ทั้งหมด
   const fetchPCRs = async () => {
     setLoading(true);
     try {
@@ -51,34 +48,27 @@ const PCRManagement = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchPCRs();
   }, []);
-
   const filteredPCRs = pcrs.filter((pcr) =>
     pcr.pcr_name.toLowerCase().includes(nameFilter.toLowerCase())
   );
-
   const openNew = () => {
     setPCR(emptyPCR);
     setSubmitted(false);
     setPCRDialog(true);
   };
-
   const hideDialog = () => {
     setSubmitted(false);
     setPCRDialog(false);
   };
-
   const hideDeletePCRDialog = () => {
     setDeletePCRDialog(false);
   };
-
   const hideDeletePCRsDialog = () => {
     setDeletePCRsDialog(false);
   };
-
   const savePCR = async () => {
     setSubmitted(true);
     if (pcr.pcr_name.trim()) {
@@ -127,17 +117,14 @@ const PCRManagement = () => {
       }
     }
   };
-
   const editPCR = (p: PCR) => {
     setPCR({ ...p });
     setPCRDialog(true);
   };
-
   const confirmDeletePCR = (p: PCR) => {
     setPCR(p);
     setDeletePCRDialog(true);
   };
-
   const deletePCR = async () => {
     setLoading(true);
     try {
@@ -163,7 +150,6 @@ const PCRManagement = () => {
       setLoading(false);
     }
   };
-
   const deleteSelectedPCRs = async () => {
     if (!selectedPCRs) return;
     setLoading(true);
@@ -191,7 +177,6 @@ const PCRManagement = () => {
       setLoading(false);
     }
   };
-
   const onInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     name: keyof PCR
@@ -199,7 +184,6 @@ const PCRManagement = () => {
     const val = e.target.value;
     setPCR({ ...pcr, [name]: val });
   };
-
   const actionBodyTemplate = (rowData: PCR) => (
     <div className="flex gap-1">
       <Button
@@ -220,49 +204,6 @@ const PCRManagement = () => {
       />
     </div>
   );
-
-  const pcrDialogFooter = (
-    <div className="flex justify-end gap-2">
-      <Button label="ยกเลิก" icon="pi pi-times" outlined onClick={hideDialog} />
-      <Button label="บันทึก" icon="pi pi-check" onClick={savePCR} />
-    </div>
-  );
-
-  const deletePCRDialogFooter = (
-    <div className="flex justify-end gap-2">
-      <Button
-        label="ไม่"
-        icon="pi pi-times"
-        outlined
-        onClick={hideDeletePCRDialog}
-      />
-      <Button
-        label="ใช่"
-        icon="pi pi-check"
-        severity="danger"
-        onClick={deletePCR}
-      />
-    </div>
-  );
-
-  const deletePCRsDialogFooter = (
-    <div className="flex justify-end gap-2">
-      <Button
-        label="ไม่"
-        icon="pi pi-times"
-        outlined
-        onClick={hideDeletePCRsDialog}
-      />
-      <Button
-        label="ใช่"
-        icon="pi pi-check"
-        severity="danger"
-        onClick={deleteSelectedPCRs}
-      />
-    </div>
-  );
-
-  // Header สำหรับตาราง
   const renderHeader = () => {
     return (
       <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3">
@@ -362,101 +303,26 @@ const PCRManagement = () => {
             ></Column>
           </DataTable>
 
-          {/* Dialog เพิ่ม/แก้ไข */}
-          <Dialog
+          <AddEditDialog
             visible={pcrDialog}
-            style={{ width: "500px" }}
-            header="รายละเอียด PCR"
-            modal
-            className="p-fluid"
-            footer={pcrDialogFooter}
+            pcr={pcr}
+            submitted={submitted}
             onHide={hideDialog}
-          >
-            <div className="field mt-3">
-              <label htmlFor="pcr_name" className="font-bold">
-                ชื่อ PCR *
-              </label>
-              <InputText
-                id="pcr_name"
-                value={pcr.pcr_name}
-                onChange={(e) => onInputChange(e, "pcr_name")}
-                required
-                autoFocus
-                className={classNames({
-                  "p-invalid": submitted && !pcr.pcr_name,
-                })}
-                placeholder="กรอกชื่อ PCR"
-              />
-              {submitted && !pcr.pcr_name && (
-                <small className="p-error">จำเป็นต้องกรอกชื่อ PCR</small>
-              )}
-            </div>
-            <div className="field mt-3">
-              <label htmlFor="approval_date" className="font-bold">
-                วันที่อนุมัติ
-              </label>
-              <InputText
-                id="approval_date"
-                value={pcr.approval_date}
-                onChange={(e) => onInputChange(e, "approval_date")}
-                placeholder="กรอกวันที่อนุมัติ"
-              />
-            </div>
-            <div className="field mt-3">
-              <label htmlFor="pcr_type" className="font-bold">
-                ประเภท PCR
-              </label>
-              <InputText
-                id="pcr_type"
-                value={pcr.pcr_type}
-                onChange={(e) => onInputChange(e, "pcr_type")}
-                placeholder="กรอกประเภท PCR"
-              />
-            </div>
-          </Dialog>
-
-          {/* Dialog ลบ 1 */}
-          <Dialog
+            onChange={onInputChange}
+            onSave={savePCR}
+          />
+          <DeleteDialog
             visible={deletePCRDialog}
-            style={{ width: "450px" }}
-            header="ยืนยันการลบ"
-            modal
-            footer={deletePCRDialogFooter}
             onHide={hideDeletePCRDialog}
-          >
-            <div className="flex align-items-center justify-content-center">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem", color: "var(--red-500)" }}
-              />
-              {pcr && (
-                <span>
-                  คุณแน่ใจหรือไม่ว่าต้องการลบ <b>{pcr.pcr_name}</b>?
-                </span>
-              )}
-            </div>
-          </Dialog>
-
-          {/* Dialog ลบหลายรายการ */}
-          <Dialog
+            onConfirm={deletePCR}
+            message={`คุณแน่ใจหรือไม่ว่าต้องการลบ ${pcr.pcr_name}?`}
+          />
+          <DeleteDialog
             visible={deletePCRsDialog}
-            style={{ width: "450px" }}
-            header="ยืนยันการลบ"
-            modal
-            footer={deletePCRsDialogFooter}
             onHide={hideDeletePCRsDialog}
-          >
-            <div className="flex align-items-center justify-content-center">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem", color: "var(--red-500)" }}
-              />
-              <span>
-                คุณแน่ใจหรือไม่ว่าต้องการลบ {selectedPCRs?.length}{" "}
-                รายการที่เลือก?
-              </span>
-            </div>
-          </Dialog>
+            onConfirm={deleteSelectedPCRs}
+            message={`คุณแน่ใจหรือไม่ว่าต้องการลบ ${selectedPCRs?.length} รายการที่เลือก?`}
+          />  
         </div>
       </div>
     </div>

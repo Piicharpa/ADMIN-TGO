@@ -40,9 +40,9 @@
         "async": false
       }
     },
-    "(app-client)/./layout/layout.tsx": {
+    "(app-client)/./app/(main)/pages/menu/manage_info/page.tsx": {
       "*": {
-        "id": "(sc_client)/./layout/layout.tsx",
+        "id": "(sc_client)/./app/(main)/pages/menu/manage_info/page.tsx",
         "name": "*",
         "chunks": [],
         "async": false
@@ -56,9 +56,9 @@
         "async": false
       }
     },
-    "(app-client)/./app/(main)/pages/menu/verifier/page.tsx": {
+    "(app-client)/./layout/layout.tsx": {
       "*": {
-        "id": "(sc_client)/./app/(main)/pages/menu/verifier/page.tsx",
+        "id": "(sc_client)/./layout/layout.tsx",
         "name": "*",
         "chunks": [],
         "async": false
@@ -72,17 +72,9 @@
         "async": false
       }
     },
-    "(app-client)/./app/(main)/pages/menu/manage_info/page.tsx": {
+    "(app-client)/./app/(main)/pages/menu/verifier/page.tsx": {
       "*": {
-        "id": "(sc_client)/./app/(main)/pages/menu/manage_info/page.tsx",
-        "name": "*",
-        "chunks": [],
-        "async": false
-      }
-    },
-    "(app-client)/./app/(main)/page.tsx": {
-      "*": {
-        "id": "(sc_client)/./app/(main)/page.tsx",
+        "id": "(sc_client)/./app/(main)/pages/menu/verifier/page.tsx",
         "name": "*",
         "chunks": [],
         "async": false
@@ -171,11 +163,11 @@
       ],
       "async": false
     },
-    "/Users/piicharpa/ADMIN-TGO/layout/layout.tsx": {
-      "id": "(app-client)/./layout/layout.tsx",
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/manage_info/page.tsx": {
+      "id": "(app-client)/./app/(main)/pages/menu/manage_info/page.tsx",
       "name": "*",
       "chunks": [
-        "app/(main)/layout:static/chunks/app/(main)/layout.js"
+        "app/(main)/pages/menu/manage_info/page:static/chunks/app/(main)/pages/menu/manage_info/page.js"
       ],
       "async": false
     },
@@ -187,11 +179,11 @@
       ],
       "async": false
     },
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/verifier/page.tsx": {
-      "id": "(app-client)/./app/(main)/pages/menu/verifier/page.tsx",
+    "/Users/piicharpa/ADMIN-TGO/layout/layout.tsx": {
+      "id": "(app-client)/./layout/layout.tsx",
       "name": "*",
       "chunks": [
-        "app/(main)/pages/menu/verifier/page:static/chunks/app/(main)/pages/menu/verifier/page.js"
+        "app/(main)/layout:static/chunks/app/(main)/layout.js"
       ],
       "async": false
     },
@@ -203,31 +195,22 @@
       ],
       "async": false
     },
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/manage_info/page.tsx": {
-      "id": "(app-client)/./app/(main)/pages/menu/manage_info/page.tsx",
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/verifier/page.tsx": {
+      "id": "(app-client)/./app/(main)/pages/menu/verifier/page.tsx",
       "name": "*",
       "chunks": [
-        "app/(main)/pages/menu/manage_info/page:static/chunks/app/(main)/pages/menu/manage_info/page.js"
-      ],
-      "async": false
-    },
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/page.tsx": {
-      "id": "(app-client)/./app/(main)/page.tsx",
-      "name": "*",
-      "chunks": [
-        "app/(main)/page:static/chunks/app/(main)/page.js"
+        "app/(main)/pages/menu/verifier/page:static/chunks/app/(main)/pages/menu/verifier/page.js"
       ],
       "async": false
     }
   },
   "entryCSSFiles": {
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/layout": [],
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/manage_info/page": [],
     "/Users/piicharpa/ADMIN-TGO/app/layout": [
       "static/css/app/layout.css"
     ],
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/verifier/page": [],
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/layout": [],
     "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/company/page": [],
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/manage_info/page": [],
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/page": []
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/verifier/page": []
   }
 }
