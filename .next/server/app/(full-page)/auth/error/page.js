@@ -191,7 +191,7 @@ __webpack_require__.r(__webpack_exports__);
       ]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 6344)), "/Users/piicharpa/ADMIN-TGO/app/(full-page)/layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1318)), "/Users/piicharpa/ADMIN-TGO/app/(full-page)/layout.tsx"],
           metadata: {
     icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3174))).default(props))],
     apple: [],
@@ -232,13 +232,6 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9121))
-
-/***/ }),
-
-/***/ 3259:
-/***/ (() => {
-
-
 
 /***/ }),
 
@@ -353,39 +346,6 @@ const __default__ = proxy.default;
 
 /***/ }),
 
-/***/ 6344:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ SimpleLayout),
-/* harmony export */   metadata: () => (/* binding */ metadata)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6786);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7887);
-
-// import AppConfig from '../../layout/AppConfig';
-
-const metadata = {
-    title: "PrimeReact Sakai",
-    description: "The ultimate collection of design-agnostic, flexible and accessible React UI Components."
-};
-function SimpleLayout({ children }) {
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-        children: [
-            children,
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(AppConfig, {
-                simple: true
-            })
-        ]
-    });
-}
-
-
-/***/ }),
-
 /***/ 9483:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
@@ -401,7 +361,7 @@ module.exports = __webpack_require__(5171)
 var __webpack_require__ = require("../../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [763,627,176,360], () => (__webpack_exec__(9382)));
+var __webpack_exports__ = __webpack_require__.X(0, [763,504,64,124,360,348], () => (__webpack_exec__(9382)));
 module.exports = __webpack_exports__;
 
 })();
