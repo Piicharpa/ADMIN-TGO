@@ -1,5 +1,5 @@
 "use client";
-import React, {useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -66,16 +66,32 @@ const Register_round = () => {
   const hideDeleteRoundsDialog = () => {
     setDeleteRoundsDialog(false);
   };
+  const toThaiDate = (date: string | Date) => {
+    if (!date) return "";
+    const d = date instanceof Date ? date : new Date(date);
+    const day = d.getDate().toString().padStart(2, "0");
+    const month = (d.getMonth() + 1).toString().padStart(2, "0"); // เดือน 0-11
+    const year = d.getFullYear() + 543; // แปลงเป็น พ.ศ.
+    return `${day}/${month}/${year}`;
+  };
+
   const saveRound = async () => {
     setSubmitted(true);
     if (!currentRound.quarter.trim()) return;
     setLoading(true);
     try {
+      // แปลง start และ end เป็น dd/mm/yyyy พ.ศ.
+      const roundToSave = {
+        ...currentRound,
+        start: toThaiDate(currentRound.start),
+        end: toThaiDate(currentRound.end),
+      };
+
       if (currentRound.id && currentRound.id !== 0) {
         // update
         const updated = await RoundService.updateRound(
           currentRound.id,
-          currentRound
+          roundToSave
         );
         setRounds((prev) =>
           prev.map((r) => (r.id === updated.id ? updated : r))
@@ -89,7 +105,7 @@ const Register_round = () => {
       } else {
         // create
         const maxId = rounds.length ? Math.max(...rounds.map((r) => r.id)) : 0;
-        const roundToCreate = { ...currentRound, id: maxId + 1 };
+        const roundToCreate = { ...roundToSave, id: maxId + 1 };
         const created = await RoundService.createRound(roundToCreate);
         setRounds((prev) => [...prev, created]);
         toast.current?.show({
@@ -99,6 +115,7 @@ const Register_round = () => {
           life: 3000,
         });
       }
+
       setRoundDialog(false);
       setCurrentRound(emptyRound);
       setSubmitted(false);
@@ -114,6 +131,7 @@ const Register_round = () => {
       setLoading(false);
     }
   };
+
   const deleteRound = async () => {
     if (!currentRound.id) return;
     setLoading(true);
@@ -168,8 +186,8 @@ const Register_round = () => {
     }
   };
   const confirmDelete = (round: Round) => {
-    setCurrentRound(round); 
-    setDeleteDialog(true); 
+    setCurrentRound(round);
+    setDeleteDialog(true);
   };
   const editRound = (round: Round) => {
     setCurrentRound({
@@ -184,7 +202,7 @@ const Register_round = () => {
     name: string
   ) => {
     const val = "target" in e ? e.target.value : e.value;
-    setCurrentRound((prev) => ({ ...prev, [name]: val }));
+    setCurrentRound((prev: Round) => ({ ...prev, [name]: val }));
   };
   const actionBodyTemplate = (rowData: Round) => (
     <div className="flex gap-1">
@@ -209,6 +227,14 @@ const Register_round = () => {
   const filteredRounds = rounds.filter((round) =>
     round.quarter?.toLowerCase().includes(roundFilter.toLowerCase())
   );
+  const formatDate = (value: string | Date) => {
+    if (!value) return "";
+    return new Date(value).toLocaleDateString("th-TH", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  };
 
   return (
     <div className="grid">

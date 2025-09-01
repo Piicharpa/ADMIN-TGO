@@ -74,13 +74,25 @@ const PCRManagement = () => {
     if (pcr.pcr_name.trim()) {
       setLoading(true);
       try {
+        // แปลงวันที่เป็น dd เดือน yyyy พ.ศ.
+        const approvalDate =
+          pcr.approval_date instanceof Date
+            ? pcr.approval_date.toLocaleDateString("th-TH", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })
+            : pcr.approval_date;
+
+        const payload = {
+          pcr_name: pcr.pcr_name,
+          approval_date: approvalDate, // ส่งเป็นสตริง พ.ศ.
+          pcr_type: pcr.pcr_type,
+          pcr_type_id: pcr.pcr_type_id,
+        };
+
         if (pcr.id) {
-          await PCRService.updatePCR(pcr.id, {
-            pcr_name: pcr.pcr_name,
-            approval_date: pcr.approval_date,
-            pcr_type: pcr.pcr_type,
-            pcr_type_id: pcr.pcr_type_id,
-          });
+          await PCRService.updatePCR(pcr.id, payload);
           toast.current?.show({
             severity: "success",
             summary: "สำเร็จ",
@@ -88,12 +100,7 @@ const PCRManagement = () => {
             life: 3000,
           });
         } else {
-          await PCRService.createPCR({
-            pcr_name: pcr.pcr_name,
-            approval_date: pcr.approval_date,
-            pcr_type: pcr.pcr_type,
-            pcr_type_id: pcr.pcr_type_id,
-          });
+          await PCRService.createPCR(payload);
           toast.current?.show({
             severity: "success",
             summary: "สำเร็จ",
@@ -101,6 +108,7 @@ const PCRManagement = () => {
             life: 3000,
           });
         }
+
         fetchPCRs();
         setPCRDialog(false);
         setPCR(emptyPCR);
@@ -178,10 +186,15 @@ const PCRManagement = () => {
     }
   };
   const onInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement> | { value: any },
     name: keyof PCR
   ) => {
-    const val = e.target.value;
+    let val;
+    if ("target" in e) {
+      val = e.target.value; // สำหรับ InputText
+    } else {
+      val = e.value; // สำหรับ Calendar => Date object
+    }
     setPCR({ ...pcr, [name]: val });
   };
   const actionBodyTemplate = (rowData: PCR) => (
@@ -228,6 +241,14 @@ const PCRManagement = () => {
         </div>
       </div>
     );
+  };
+  const formatDate = (value: string | Date) => {
+    if (!value) return "";
+    return new Date(value).toLocaleDateString("th-TH", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
   };
 
   return (
@@ -288,7 +309,7 @@ const PCRManagement = () => {
               header="วันที่อนุมัติ"
               sortable
               style={{ width: "150px" }}
-            ></Column>
+            />
             <Column
               field="pcr_type"
               header="ประเภท"
@@ -322,7 +343,7 @@ const PCRManagement = () => {
             onHide={hideDeletePCRsDialog}
             onConfirm={deleteSelectedPCRs}
             message={`คุณแน่ใจหรือไม่ว่าต้องการลบ ${selectedPCRs?.length} รายการที่เลือก?`}
-          />  
+          />
         </div>
       </div>
     </div>

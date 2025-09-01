@@ -250,7 +250,7 @@ const Crud = () => {
                                 <i className="pi pi-globe text-teal-500 text-xl"></i>
                             </span>
                             <div className="text-900 font-medium mb-2 text-center">ค่าการปล่อยก๊าซเรือนกระจก </div>
-                            <span className="text-600 text-sm text-center">ค่า EF จากฐานข้อมูล อบก. </span>
+                            <span className="text-600 text-sm text-center">ค่า EF จากอบก. </span>
                         </div>
 
                         {/* PCR Card */}

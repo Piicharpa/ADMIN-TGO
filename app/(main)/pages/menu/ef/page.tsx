@@ -38,6 +38,10 @@ const TGO = () => {
   const [globalFilter, setGlobalFilter] = useState("");
   const [nameFilter, setNameFilter] = useState("");
   const [loading, setLoading] = useState(false);
+  const [tgoCategories, setTgoCategories] = useState<Demo.TgoEfCategory[]>([]);
+  const [tgoSubcategories, setTgoSubcategories] = useState<
+    Demo.TgoEfSubcategory[]
+  >([]);
   const toast = useRef<Toast>(null);
   const hideDeleteEfDialog = () => setDeleteEfDialog(false);
   const hideDeleteEfsDialog = () => setDeleteEfsDialog(false);
@@ -62,6 +66,9 @@ const TGO = () => {
   };
   useEffect(() => {
     fetchEfs();
+    EfService.getCategories().then(setTgoCategories).catch(console.error);
+
+    EfService.getSubcategories().then(setTgoSubcategories).catch(console.error);
   }, []);
   const filteredEfs = efs.filter((ef) =>
     ef.item.toLowerCase().includes(nameFilter.toLowerCase())
@@ -216,6 +223,12 @@ const TGO = () => {
       </div>
     );
   };
+  const onCategoryChange = (e: any) => {
+    setEf({ ...ef, tgo_ef_cat_id: e.value, tgo_ef_subcat_id: 0 });
+  };
+  const onSubcategoryChange = (e: any) => {
+    setEf({ ...ef, tgo_ef_subcat_id: e.value });
+  };
   const renderHeader = () => {
     return (
       <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center gap-3">
@@ -333,6 +346,10 @@ const TGO = () => {
             onHide={hideDialog}
             onChange={onInputChange}
             onSave={saveEf}
+            tgoCategories={tgoCategories}
+            tgoSubcategories={tgoSubcategories}
+            onCategoryChange={onCategoryChange}
+            onSubcategoryChange={onSubcategoryChange}
           />
           <DeleteDialog
             visible={deleteEfDialog}

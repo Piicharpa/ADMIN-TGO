@@ -3,6 +3,7 @@ import React from "react";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
+import { addLocale } from "primereact/api";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
@@ -15,9 +16,57 @@ interface Props {
   round: Round;
   submitted: boolean;
   onHide: () => void;
-  onChange: (e: React.ChangeEvent<HTMLInputElement> | { value: any }, name: string) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement> | { value: any },
+    name: string
+  ) => void;
   onSave: () => void;
 }
+
+addLocale("th-TH", {
+  firstDayOfWeek: 0,
+  dayNames: [
+    "อาทิตย์",
+    "จันทร์",
+    "อังคาร",
+    "พุธ",
+    "พฤหัสบดี",
+    "ศุกร์",
+    "เสาร์",
+  ],
+  dayNamesShort: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
+  dayNamesMin: ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"],
+  monthNames: [
+    "มกราคม",
+    "กุมภาพันธ์",
+    "มีนาคม",
+    "เมษายน",
+    "พฤษภาคม",
+    "มิถุนายน",
+    "กรกฎาคม",
+    "สิงหาคม",
+    "กันยายน",
+    "ตุลาคม",
+    "พฤศจิกายน",
+    "ธันวาคม",
+  ],
+  monthNamesShort: [
+    "ม.ค.",
+    "ก.พ.",
+    "มี.ค.",
+    "เม.ย.",
+    "พ.ค.",
+    "มิ.ย.",
+    "ก.ค.",
+    "ส.ค.",
+    "ก.ย.",
+    "ต.ค.",
+    "พ.ย.",
+    "ธ.ค.",
+  ],
+  today: "วันนี้",
+  clear: "ลบ",
+});
 
 export default function AddEditDialog({
   visible,
@@ -73,10 +122,15 @@ export default function AddEditDialog({
           value={round?.start ? new Date(round.start) : null}
           onChange={(e) => {
             const date = e.value instanceof Date ? e.value : null;
-            onChange({ value: date ? date.toISOString().split("T")[0] : "" }, "start");
+            onChange(
+              { value: date ? date.toISOString().split("T")[0] : "" },
+              "start"
+            );
           }}
           showIcon
-          dateFormat="yy-mm-dd"
+          dateFormat="dd/mm/yy"
+          yearRange="2500:2600"
+          locale="th-TH" // <-- ต้องตรงกับที่ addLocale
           className={classNames({ "p-invalid": submitted && !round?.start })}
           placeholder="เลือกวันเริ่มต้น"
         />
@@ -95,12 +149,17 @@ export default function AddEditDialog({
           value={round?.end ? new Date(round.end) : null}
           onChange={(e) => {
             const date = e.value instanceof Date ? e.value : null;
-            onChange({ value: date ? date.toISOString().split("T")[0] : "" }, "end");
+            onChange(
+              { value: date ? date.toISOString().split("T")[0] : "" },
+              "end"
+            );
           }}
           showIcon
-          dateFormat="yy-mm-dd"
-          className={classNames({ "p-invalid": submitted && !round?.end })}
-          placeholder="เลือกวันสิ้นสุด"
+          dateFormat="dd/mm/yy"
+          yearRange="2500:2600"
+          locale="th-TH" // <-- ต้องตรงกับที่ addLocale
+          className={classNames({ "p-invalid": submitted && !round?.start })}
+          placeholder="เลือกวันเริ่มต้น"
         />
         {submitted && !round?.end && (
           <small className="p-error">จำเป็นต้องเลือกวันสิ้นสุด</small>
@@ -123,7 +182,9 @@ export default function AddEditDialog({
           optionLabel="label"
           optionValue="value"
           placeholder="เลือกสถานะ"
-          className={classNames({ "p-invalid": submitted && round?.status === undefined })}
+          className={classNames({
+            "p-invalid": submitted && round?.status === undefined,
+          })}
         />
         {submitted && round?.status === undefined && (
           <small className="p-error">จำเป็นต้องเลือกสถานะ</small>
