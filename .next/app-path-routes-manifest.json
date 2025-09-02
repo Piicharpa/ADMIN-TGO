@@ -1,0 +1,17 @@
+{
+  "/favicon.ico/route": "/favicon.ico",
+  "/(full-page)/landing/page": "/landing",
+  "/(full-page)/auth/access/page": "/auth/access",
+  "/(full-page)/pages/notfound/page": "/pages/notfound",
+  "/(full-page)/auth/login/page": "/auth/login",
+  "/(full-page)/auth/error/page": "/auth/error",
+  "/(main)/page": "/",
+  "/(main)/pages/menu/industrial/page": "/pages/menu/industrial",
+  "/(main)/pages/menu/ef/page": "/pages/menu/ef",
+  "/(main)/pages/menu/company/page": "/pages/menu/company",
+  "/(main)/pages/menu/round/page": "/pages/menu/round",
+  "/(main)/pages/menu/manage_info/page": "/pages/menu/manage_info",
+  "/(main)/pages/menu/pcr/page": "/pages/menu/pcr",
+  "/(main)/pages/menu/unit/page": "/pages/menu/unit",
+  "/(main)/pages/menu/verifier/page": "/pages/menu/verifier"
+}

@@ -8,7 +8,7 @@
     "start": "next start",
     "format": "prettier --write \"{app,demo,layout,types}/**/*.{js,ts,tsx,d.ts}\"",
     "lint": "next lint",
-    "export": "next build && next export"
+    "export-static": "next build && mv out build"
   },
   "dependencies": {
     "@types/node": "20.3.1",
