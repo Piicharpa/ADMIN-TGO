@@ -103,7 +103,7 @@ Object.defineProperty(exports, "addBasePath", ({
 }));
 const _addpathprefix = __webpack_require__(893);
 const _normalizetrailingslash = __webpack_require__(6089);
-const basePath =  false || "";
+const basePath = "/admin" || 0;
 function addBasePath(path, required) {
     return (0, _normalizetrailingslash.normalizePathTrailingSlash)( false ? 0 : (0, _addpathprefix.addPathPrefix)(path, basePath));
 }

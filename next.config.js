@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
-}
+  output: 'export',
+  // เพิ่มบรรทัดนี้เพื่อกำหนด base path
+  basePath: '/admin', // หรือชื่อโฟลเดอร์ที่คุณจะใช้
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

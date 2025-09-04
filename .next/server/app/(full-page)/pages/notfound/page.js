@@ -180,7 +180,7 @@ module.exports = require("url");
 
 /***/ }),
 
-/***/ 7250:
+/***/ 5984:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -233,7 +233,7 @@ __webpack_require__.r(__webpack_exports__);
         {
           'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1318)), "/Users/piicharpa/ADMIN-TGO/app/(full-page)/layout.tsx"],
           metadata: {
-    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3174))).default(props))],
+    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3063))).default(props))],
     apple: [],
     openGraph: [],
     twitter: [],
@@ -245,7 +245,7 @@ __webpack_require__.r(__webpack_exports__);
         {
           'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 729)), "/Users/piicharpa/ADMIN-TGO/app/layout.tsx"],
           metadata: {
-    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3174))).default(props))],
+    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3063))).default(props))],
     apple: [],
     openGraph: [],
     twitter: [],
@@ -454,7 +454,7 @@ module.exports = __webpack_require__(273);
 var __webpack_require__ = require("../../../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [763,504,977,64,124,360,348], () => (__webpack_exec__(7250)));
+var __webpack_exports__ = __webpack_require__.X(0, [763,504,977,64,124,224,348], () => (__webpack_exec__(5984)));
 module.exports = __webpack_exports__;
 
 })();

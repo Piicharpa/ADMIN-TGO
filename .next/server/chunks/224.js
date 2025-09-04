@@ -1,5 +1,5 @@
-exports.id = 360;
-exports.ids = [360];
+exports.id = 224;
+exports.ids = [224];
 exports.modules = {
 
 /***/ 2913:
@@ -182,7 +182,7 @@ const __default__ = proxy.default;
 
 /***/ }),
 
-/***/ 3174:
+/***/ 3063:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -196,7 +196,7 @@ __webpack_require__.r(__webpack_exports__);
 
   /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((props) => {
     const imageData = {"type":"image/x-icon","sizes":"any"}
-    const imageUrl = (0,next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0__.fillMetadataSegment)(".", props.params, "favicon.ico")
+    const imageUrl = (0,next_dist_lib_metadata_get_metadata_route__WEBPACK_IMPORTED_MODULE_0__.fillMetadataSegment)("/admin", props.params, "favicon.ico")
 
     return [{
       ...imageData,

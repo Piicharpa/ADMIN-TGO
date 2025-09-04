@@ -48,7 +48,7 @@ Object.defineProperty(exports, "getDomainLocale", ({
         return getDomainLocale;
     }
 }));
-const basePath = (/* unused pure expression or super */ null && ( false || ""));
+const basePath = (/* unused pure expression or super */ null && ("/admin" || 0));
 function getDomainLocale(path, locale, locales, domainLocales) {
     if (false) {} else {
         return false;
