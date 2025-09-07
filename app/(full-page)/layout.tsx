@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import AppConfig from './layout/AppConfig';
 import React from 'react';
+import '@/styles/globals.css';
+
 
 
 interface SimpleLayoutProps {

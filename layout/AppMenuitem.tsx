@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Ripple } from 'primereact/ripple';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useContext } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition } from 'primereact/csstransition';
 import { MenuContext } from './context/menucontext';
 import { AppMenuItemProps } from '@/types';
 import { usePathname, useSearchParams } from 'next/navigation';
