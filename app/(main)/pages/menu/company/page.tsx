@@ -58,13 +58,13 @@ const CompanyPage = () => {
 
   const handleSavePassword = (password: string) => {
     setSubmitted(true);
-    console.log(selectedCompany);
     if (
       passwordData.password &&
       passwordData.password === passwordData.confirmPassword &&
       selectedCompany
     ) {
-      CompanyService.putCompanyPass(selectedCompany.user_id, password)
+      // CompanyService.updatePasswordByCompanyName(selectedCompany.name, password)
+      CompanyService.updatePasswordByCompanyName(selectedCompany.name, password)
 
         .then(() => {
           toast.current?.show({
@@ -89,6 +89,18 @@ const CompanyPage = () => {
     }
   };
 
+  useEffect(() => {
+    CompanyService.getCompanies()
+      .then(setCompanies)
+      .catch(() =>
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "Could not fetch companies",
+          life: 3000,
+        })
+      );
+  }, []);
 
   return (
     <div className="grid company-demo">

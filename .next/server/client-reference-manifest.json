@@ -40,17 +40,17 @@
         "async": false
       }
     },
-    "(app-client)/./app/(main)/page.tsx": {
+    "(app-client)/./app/layout.tsx": {
       "*": {
-        "id": "(sc_client)/./app/(main)/page.tsx",
+        "id": "(sc_client)/./app/layout.tsx",
         "name": "*",
         "chunks": [],
         "async": false
       }
     },
-    "(app-client)/./app/layout.tsx": {
+    "(app-client)/./app/(main)/page.tsx": {
       "*": {
-        "id": "(sc_client)/./app/layout.tsx",
+        "id": "(sc_client)/./app/(main)/page.tsx",
         "name": "*",
         "chunks": [],
         "async": false
@@ -155,19 +155,19 @@
       ],
       "async": false
     },
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/page.tsx": {
-      "id": "(app-client)/./app/(main)/page.tsx",
-      "name": "*",
-      "chunks": [
-        "app/(main)/page:static/chunks/app/(main)/page.js"
-      ],
-      "async": false
-    },
     "/Users/piicharpa/ADMIN-TGO/app/layout.tsx": {
       "id": "(app-client)/./app/layout.tsx",
       "name": "*",
       "chunks": [
         "app/layout:static/chunks/app/layout.js"
+      ],
+      "async": false
+    },
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/page.tsx": {
+      "id": "(app-client)/./app/(main)/page.tsx",
+      "name": "*",
+      "chunks": [
+        "app/(main)/page:static/chunks/app/(main)/page.js"
       ],
       "async": false
     },
@@ -189,10 +189,10 @@
     }
   },
   "entryCSSFiles": {
-    "/Users/piicharpa/ADMIN-TGO/app/(main)/page": [],
     "/Users/piicharpa/ADMIN-TGO/app/layout": [
       "static/css/app/layout.css"
     ],
+    "/Users/piicharpa/ADMIN-TGO/app/(main)/page": [],
     "/Users/piicharpa/ADMIN-TGO/app/(main)/layout": [],
     "/Users/piicharpa/ADMIN-TGO/app/(main)/pages/menu/company/page": []
   }
