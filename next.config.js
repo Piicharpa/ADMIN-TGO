@@ -1,8 +1,13 @@
-/** @type {import('next').NextConfig} */
+
+
+// next.config.js
 const nextConfig = {
   output: 'export',
-  // เพิ่มบรรทัดนี้เพื่อกำหนด base path
-  // basePath: '/admin', // หรือชื่อโฟลเดอร์ที่คุณจะใช้
+  swcMinify: true, // ใช้ SWC minifier แทน Terser
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production', // ลบ console.log ในโหมด production
+  },
+  basePath: '/admin', // หรือชื่อโฟลเดอร์ที่คุณจะใช้
 };
 
 module.exports = nextConfig;
