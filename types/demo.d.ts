@@ -94,6 +94,19 @@ import { ChartData, ChartOptions } from "chart.js";
     pcr_type_id: number;
   };
 
+  // type Company = {
+  //   id: number;
+  //   name: string;
+  //   address: string;
+  //   provinceId: number;
+  //   contactNo?: string | null;
+  //   industrialId?: number | null;
+  //   districtId?: number | null;
+  //   subdistrictId?: number | null;
+  //   zipcode?: string | null;
+  //   products: Product[];
+  // };
+
   type CompanyDetail = {
     company_id: number;
     user_id: number;
@@ -109,6 +122,7 @@ import { ChartData, ChartOptions } from "chart.js";
     zipcode: string | null;
     industrial_name: string | null;
     product_count: number;
+    products: Product[];
   };
 
   type CompanyPassword = {

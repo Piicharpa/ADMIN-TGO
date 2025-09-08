@@ -11,7 +11,7 @@ import { CompanyService } from "@/demo/service/CompanyService";
 import AddEditDialog from "@/app/(full-page)/component/dialog/company";
 import type { Demo } from "@/types";
 
-type Company = Demo.Company;
+type Company = Demo.CompanyDetail;
 
 const CompanyPage = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
@@ -44,26 +44,51 @@ const CompanyPage = () => {
         }}
       />
       <Button
-        rounded
         icon="pi pi-pencil"
-        severity="success"
-        onClick={() => setDialogVisible(true)}
+        className="p-button-rounded p-button-success"
+        onClick={() => {
+          setSelectedCompany(rowData);
+          setDialogVisible(true);
+          setSubmitted(false);
+          setPasswordData({ password: "", confirmPassword: "" });
+        }}
       />
     </div>
   );
 
-  useEffect(() => {
-    CompanyService.getCompanies()
-      .then(setCompanies)
-      .catch(() =>
-        toast.current?.show({
-          severity: "error",
-          summary: "Error",
-          detail: "Could not fetch companies",
-          life: 3000,
+  const handleSavePassword = (password: string) => {
+    setSubmitted(true);
+    console.log(selectedCompany);
+    if (
+      passwordData.password &&
+      passwordData.password === passwordData.confirmPassword &&
+      selectedCompany
+    ) {
+      CompanyService.putCompanyPass(selectedCompany.user_id, password)
+
+        .then(() => {
+          toast.current?.show({
+            severity: "success",
+            summary: "Success",
+            detail: "เปลี่ยนรหัสผ่านเรียบร้อย",
+            life: 3000,
+          });
+          setDialogVisible(false);
         })
-      );
-  }, []);
+        .catch((error) => {
+          toast.current?.show({
+            severity: "error",
+            summary: "Error",
+            detail: "ไม่สามารถเปลี่ยนรหัสผ่านได้",
+            life: 3000,
+          });
+          console.error("Failed to update password:", error);
+        });
+    } else if (!selectedCompany) {
+      console.error("No company selected. Cannot update password.");
+    }
+  };
+
 
   return (
     <div className="grid company-demo">
@@ -132,6 +157,12 @@ const CompanyPage = () => {
                   <Column field="id" header="รหัสผลิตภัณฑ์" sortable />
                   <Column field="name" header="ชื่อผลิตภัณฑ์" sortable />
                   <Column field="status" header="สถานะ" sortable />
+                  <Column
+                    field="actions"
+                    header="การจัดการ"
+                    body={actionBodyTemplate}
+                    style={{ width: "10rem" }}
+                  />
                 </DataTable>
               </>
             )}
@@ -139,34 +170,11 @@ const CompanyPage = () => {
 
           <AddEditDialog
             visible={dialogVisible}
-            onHide={() => setDialogVisible(false)}
-            onSave={(password) => {
-              setSubmitted(true);
-              if (
-                passwordData.password &&
-                passwordData.password === passwordData.confirmPassword &&
-                selectedCompany
-              ) {
-                CompanyService.putCompanyPass(selectedCompany.user_id, password)
-                  .then(() => {
-                    toast.current?.show({
-                      severity: "success",
-                      summary: "Success",
-                      detail: "เปลี่ยนรหัสผ่านเรียบร้อย",
-                      life: 3000,
-                    });
-                    setDialogVisible(false);
-                  })
-                  .catch(() => {
-                    toast.current?.show({
-                      severity: "error",
-                      summary: "Error",
-                      detail: "ไม่สามารถเปลี่ยนรหัสผ่านได้",
-                      life: 3000,
-                    });
-                  });
-              }
+            onHide={() => {
+              setDialogVisible(false);
+              setSubmitted(false);
             }}
+            onSave={handleSavePassword}
             passwordData={passwordData}
             setPasswordData={setPasswordData}
             submitted={submitted}

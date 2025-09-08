@@ -1,7 +1,8 @@
 import type { Demo } from "@/types";
 type Industrial = Demo.Industrial;
+const NEXT_PUBLIC_URL_API = process.env.NEXT_PUBLIC_URL_API
 
-const API_URL = "http://178.128.123.212:5000/api/v1/admin/industrials";
+const API_URL = `${NEXT_PUBLIC_URL_API}api/v1/admin/industrials`;
 
 function mapIndustrial(apiData: any): Industrial {
   return {

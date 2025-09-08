@@ -26,8 +26,10 @@ type Verifier = {
   prefix_name: string;
 };
 
+const NEXT_PUBLIC_URL_API = process.env.NEXT_PUBLIC_URL_API
+
 // Use a base URL to make the code more flexible and easier to manage.
-const BASE_URL = "http://178.128.123.212:5000/api/v1";
+const BASE_URL = `${NEXT_PUBLIC_URL_API}api/v1`;
 
 const VERIFIER_URL = `${BASE_URL}/auditor`; // Singular for managing a specific verifier
 

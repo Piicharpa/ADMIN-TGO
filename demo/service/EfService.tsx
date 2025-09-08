@@ -2,8 +2,9 @@ import type { Demo } from '@/types';
 type Ef = Demo.Ef;
 type EfCategories = Demo.EfCategories;
 type EfSubcategories = Demo.EfSubcategories;
+const NEXT_PUBLIC_URL_API = process.env.NEXT_PUBLIC_URL_API
 
-const API_URL = "http://178.128.123.212:5000/api/v1/admin";
+const API_URL = `${NEXT_PUBLIC_URL_API}api/v1/admin`;
 
 function mapEf(data: any): Ef {
   return {

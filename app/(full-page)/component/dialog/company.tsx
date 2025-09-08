@@ -4,6 +4,9 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
+import { Demo } from "@/types";
+
+type Company = Demo.CompanyDetail;
 
 interface AdminPasswordDialogProps {
   visible: boolean;
@@ -15,7 +18,10 @@ interface AdminPasswordDialogProps {
   >;
 
   submitted: boolean;
+  
 }
+
+
 
 const AddEditDialog: React.FC<AdminPasswordDialogProps> = ({
   visible,
@@ -51,6 +57,8 @@ const AddEditDialog: React.FC<AdminPasswordDialogProps> = ({
       />
     </div>
   );
+
+  
 
   const passwordsMatch =
     passwordData.password && passwordData.confirmPassword
