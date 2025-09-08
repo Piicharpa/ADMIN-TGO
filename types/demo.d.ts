@@ -6,7 +6,6 @@ import { EventApi, EventInput } from "@fullcalendar/core";
 import { ChartData, ChartOptions } from "chart.js";
 
 {
-
   type Product = {
     productId: number;
     productNameTh: string;
@@ -110,6 +109,17 @@ import { ChartData, ChartOptions } from "chart.js";
     zipcode: string | null;
     industrial_name: string | null;
     product_count: number;
+  };
+
+  type CompanyPassword = {
+    user_id: number;
+    email: string;
+    role_id: number;
+    name: string;
+    status: string;
+    created_date: string;
+    updated_date: string;
+    password: string;
   };
 
   type Dashboard = {

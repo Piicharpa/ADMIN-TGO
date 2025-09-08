@@ -130,7 +130,7 @@ export default function AddEditDialog({
           showIcon
           dateFormat="dd/mm/yy"
           yearRange="2500:2600"
-          locale="th-TH" // <-- ต้องตรงกับที่ addLocale
+          locale="th-TH" 
           className={classNames({ "p-invalid": submitted && !round?.start })}
           placeholder="เลือกวันเริ่มต้น"
         />
