@@ -4,7 +4,14 @@ type EfCategories = Demo.EfCategories;
 type EfSubcategories = Demo.EfSubcategories;
 const NEXT_PUBLIC_URL_API = process.env.NEXT_PUBLIC_URL_API
 
+<<<<<<< HEAD
 const API_URL = `${NEXT_PUBLIC_URL_API}api/v1/admin`;
+=======
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}admin`;
+
+
+>>>>>>> my-changes-branch
 
 function mapEf(data: any): Ef {
   return {
@@ -46,19 +53,19 @@ function mapEfSubcategory(data: any): EfSubcategories {
 export const EfService = {
   // ====== EF ======
   getEfs() {
-    return fetch(`${API_URL}/tgoef`, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(`${URL}/tgoef`, { headers: { "Cache-Control": "no-cache" } })
       .then(res => res.ok ? res.json() : Promise.reject(res))
       .then((data: any[]) => data.map(mapEf));
   },
 
   getEfById(id: number) {
-    return fetch(`${API_URL}/tgoef/${id}`, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(`${URL}/tgoef/${id}`, { headers: { "Cache-Control": "no-cache" } })
       .then(res => res.ok ? res.json() : Promise.reject(res))
       .then(mapEf);
   },
 
   createEf(ef: Ef) {
-    return fetch(`${API_URL}/tgoef`, {
+    return fetch(`${URL}/tgoef`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ef),
@@ -68,7 +75,7 @@ export const EfService = {
   },
 
   updateEf(ef: Ef) {
-    return fetch(`${API_URL}/tgoef/${ef.ef_id}`, {
+    return fetch(`${URL}/tgoef/${ef.ef_id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ef),
@@ -78,20 +85,20 @@ export const EfService = {
   },
 
   deleteEf(id: number) {
-    return fetch(`${API_URL}/tgoef/${id}`, { method: "DELETE" })
+    return fetch(`${URL}/tgoef/${id}`, { method: "DELETE" })
       .then(res => res.ok ? res.json() : Promise.reject(res));
   },
 
   // ====== CATEGORIES ======
   getCategories() {
-    return fetch(`${API_URL}/tgoefcategories`, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(`${URL}/tgoefcategories`, { headers: { "Cache-Control": "no-cache" } })
       .then(res => res.ok ? res.json() : Promise.reject(res))
       .then((data: any[]) => data.map(mapEfCategory));
   },
 
   // ====== SUBCATEGORIES ======
   getSubcategories() {
-    return fetch(`${API_URL}/tgoefsubcategories`, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(`${URL}/tgoefsubcategories`, { headers: { "Cache-Control": "no-cache" } })
       .then(res => res.ok ? res.json() : Promise.reject(res))
       .then((data: any[]) => data.map(mapEfSubcategory));
   },

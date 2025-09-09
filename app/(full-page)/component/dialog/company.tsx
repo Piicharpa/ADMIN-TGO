@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> my-changes-branch
 "use client";
 import React from "react";
 import { Dialog } from "primereact/dialog";
@@ -5,7 +9,11 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { classNames } from "primereact/utils";
 
+<<<<<<< HEAD
 
+=======
+//change
+>>>>>>> my-changes-branch
 interface AdminPasswordDialogProps {
   visible: boolean;
   onHide: () => void;
@@ -119,3 +127,7 @@ const AddEditDialog: React.FC<AdminPasswordDialogProps> = ({
 };
 
 export default AddEditDialog;
+<<<<<<< HEAD
+=======
+
+>>>>>>> my-changes-branch

@@ -2,7 +2,13 @@ import type { Demo } from "@/types";
 type Industrial = Demo.Industrial;
 const NEXT_PUBLIC_URL_API = process.env.NEXT_PUBLIC_URL_API
 
+<<<<<<< HEAD
 const API_URL = `${NEXT_PUBLIC_URL_API}api/v1/admin/industrials`;
+=======
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}admin/industrials`;
+>>>>>>> my-changes-branch
 
 function mapIndustrial(apiData: any): Industrial {
   return {
@@ -14,19 +20,19 @@ function mapIndustrial(apiData: any): Industrial {
 
 export const IndustrialService = {
   getIndustrials() {
-    return fetch(API_URL, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(URL, { headers: { "Cache-Control": "no-cache" } })
       .then(res => res.ok ? res.json() : Promise.reject(res))
       .then(data => data.map(mapIndustrial));
   },
 
   getIndustrialById(id: number) {
-    return fetch(`${API_URL}/${id}`, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(`${URL}/${id}`, { headers: { "Cache-Control": "no-cache" } })
       .then(res => res.ok ? res.json() : Promise.reject(res))
       .then(mapIndustrial);
   },
 
   createIndustrial(industrial: Industrial) {
-    return fetch(API_URL, {
+    return fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(industrial),
@@ -36,7 +42,7 @@ export const IndustrialService = {
   },
 
   updateUnit(industrial: Industrial) {
-    return fetch(`${API_URL}/${industrial.industrial_id}`, {
+    return fetch(`${URL}/${industrial.industrial_id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(industrial),
@@ -46,7 +52,7 @@ export const IndustrialService = {
   },
 
   deleteUnit(id: number) {
-    return fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+    return fetch(`${URL}/${id}`, { method: 'DELETE' })
       .then(res => res.ok ? res.json() : Promise.reject(res));
   },
 };

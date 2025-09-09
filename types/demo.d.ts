@@ -20,6 +20,24 @@ import { ChartData, ChartOptions } from "chart.js";
     submittedDate: string;
   };
 
+  type CompanyDetail = {
+    company_id: number;
+    user_id: number;
+    name: string;
+    address: string;
+    province_id: number;
+    contact_no: string | null;
+    industrial_id: number | null;
+    created_date: string;
+    updated_date: string;
+    district_id: number | null;
+    subdistrict_id: number | null;
+    zipcode: string | null;
+    industrial_name: string | null;
+    product_count: number;
+    products: Product[];
+  };
+  
   type Company = {
     id: number;
     name: string;

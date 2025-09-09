@@ -2,7 +2,13 @@ import type { Demo } from "@/types";
 type Round = Demo.Round;
 const NEXT_PUBLIC_URL_API = process.env.NEXT_PUBLIC_URL_API
 
+<<<<<<< HEAD
 const API_URL = `${NEXT_PUBLIC_URL_API}api/v1/admin/rounds`;
+=======
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}admin/rounds`;
+
+>>>>>>> my-changes-branch
 
 function mapRound(apiData: any): Round {
   return {
@@ -16,7 +22,7 @@ function mapRound(apiData: any): Round {
 
 export const RoundService = {
   getRounds() {
-    return fetch(API_URL, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(URL, { headers: { "Cache-Control": "no-cache" } })
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         return res.json();
@@ -25,7 +31,7 @@ export const RoundService = {
   },
 
   getRoundById(id: number) {
-    return fetch(`${API_URL}/${id}`, {
+    return fetch(`${URL}/${id}`, {
       headers: { "Cache-Control": "no-cache" },
     })
       .then((res) => {
@@ -36,7 +42,7 @@ export const RoundService = {
   },
 
   createRound(round: Round) {
-    return fetch(API_URL, {
+    return fetch(URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(round),
@@ -47,7 +53,7 @@ export const RoundService = {
   },
 
   updateRound(id: number, round: Partial<Omit<Round, "id">>) {
-    return fetch(`${API_URL}/${id}`, {
+    return fetch(`${URL}/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(round),
@@ -58,7 +64,7 @@ export const RoundService = {
   },
 
   deleteRound(id: number) {
-    return fetch(`${API_URL}/${id}`, { method: "DELETE" }).then((res) => {
+    return fetch(`${URL}/${id}`, { method: "DELETE" }).then((res) => {
       if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
       return true;
     });

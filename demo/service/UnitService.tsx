@@ -2,7 +2,13 @@ import type { Demo } from "@/types";
 type Unit = Demo.Unit;
 const NEXT_PUBLIC_URL_API = process.env.NEXT_PUBLIC_URL_API
 
+<<<<<<< HEAD
 const API_URL = `${NEXT_PUBLIC_URL_API}api/v1/admin/units`;
+=======
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}admin/units`;
+>>>>>>> my-changes-branch
 
 function mapUnit(apiData: any): Unit {
   return {
@@ -16,19 +22,19 @@ function mapUnit(apiData: any): Unit {
 
 export const UnitService = {
   getUnits() {
-    return fetch(API_URL, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(URL, { headers: { "Cache-Control": "no-cache" } })
       .then(res => res.ok ? res.json() : Promise.reject(res))
       .then(data => data.map(mapUnit));
   },
 
   getUnitById(id: number) {
-    return fetch(`${API_URL}/${id}`, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(`${URL}/${id}`, { headers: { "Cache-Control": "no-cache" } })
       .then(res => res.ok ? res.json() : Promise.reject(res))
       .then(mapUnit);
   },
 
   createUnit(unit: Unit) {
-    return fetch(API_URL, {
+    return fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(unit),
@@ -38,7 +44,7 @@ export const UnitService = {
   },
 
   updateUnit(unit: Unit) {
-    return fetch(`${API_URL}/${unit.product_unit_id}`, {
+    return fetch(`${URL}/${unit.product_unit_id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(unit),
@@ -48,7 +54,7 @@ export const UnitService = {
   },
 
   deleteUnit(id: number) {
-    return fetch(`${API_URL}/${id}`, { method: 'DELETE' })
+    return fetch(`${URL}/${id}`, { method: 'DELETE' })
       .then(res => res.ok ? res.json() : Promise.reject(res));
   },
 };

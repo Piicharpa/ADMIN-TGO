@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "/_not-found/page": "app/_not-found/page.js",
   "/(full-page)/pages/notfound/page": "app/(full-page)/pages/notfound/page.js",
   "/(main)/pages/menu/manage_info/page": "app/(main)/pages/menu/manage_info/page.js",
@@ -10,4 +11,21 @@
   "/(main)/pages/menu/unit/page": "app/(main)/pages/menu/unit/page.js",
   "/(main)/pages/menu/industrial/page": "app/(main)/pages/menu/industrial/page.js",
   "/(main)/pages/menu/ef/page": "app/(main)/pages/menu/ef/page.js"
+=======
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/(main)/page": "app/(main)/page.js",
+  "/(full-page)/landing/page": "app/(full-page)/landing/page.js",
+  "/(full-page)/auth/access/page": "app/(full-page)/auth/access/page.js",
+  "/(full-page)/auth/login/page": "app/(full-page)/auth/login/page.js",
+  "/(full-page)/auth/error/page": "app/(full-page)/auth/error/page.js",
+  "/(full-page)/pages/notfound/page": "app/(full-page)/pages/notfound/page.js",
+  "/(main)/pages/menu/industrial/page": "app/(main)/pages/menu/industrial/page.js",
+  "/(main)/pages/menu/pcr/page": "app/(main)/pages/menu/pcr/page.js",
+  "/(main)/pages/menu/manage_info/page": "app/(main)/pages/menu/manage_info/page.js",
+  "/(main)/pages/menu/company/page": "app/(main)/pages/menu/company/page.js",
+  "/(main)/pages/menu/unit/page": "app/(main)/pages/menu/unit/page.js",
+  "/(main)/pages/menu/ef/page": "app/(main)/pages/menu/ef/page.js",
+  "/(main)/pages/menu/round/page": "app/(main)/pages/menu/round/page.js",
+  "/(main)/pages/menu/verifier/page": "app/(main)/pages/menu/verifier/page.js"
+>>>>>>> my-changes-branch
 }
