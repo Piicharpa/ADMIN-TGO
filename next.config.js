@@ -3,7 +3,6 @@
 // next.config.js
 const nextConfig = {
   output: 'export',
-  swcMinify: true, // ใช้ SWC minifier แทน Terser
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production', // ลบ console.log ในโหมด production
   },
