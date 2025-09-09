@@ -100,7 +100,7 @@ module.exports = require("next/dist/shared/lib/router/utils/format-url");
 
 /***/ }),
 
-/***/ 7887:
+/***/ 4490:
 /***/ ((module) => {
 
 "use strict";
@@ -180,7 +180,7 @@ module.exports = require("url");
 
 /***/ }),
 
-/***/ 196:
+/***/ 7642:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -192,9 +192,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   pages: () => (/* binding */ pages),
 /* harmony export */   tree: () => (/* binding */ tree)
 /* harmony export */ });
-/* harmony import */ var next_dist_client_components_error_boundary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3716);
+/* harmony import */ var next_dist_client_components_error_boundary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2673);
 /* harmony import */ var next_dist_client_components_error_boundary__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_dist_client_components_error_boundary__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1887);
+/* harmony import */ var next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9419);
 /* harmony import */ var next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
 /* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_1__) if(["default","tree","pages","GlobalError","originalPathname","__next_app__"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => next_dist_server_app_render_entry_base__WEBPACK_IMPORTED_MODULE_1__[__WEBPACK_IMPORT_KEY__]
@@ -208,14 +208,14 @@ __webpack_require__.r(__webpack_exports__);
         '(main)',
         {
         children: ['__PAGE__', {}, {
-          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7352)), "/Users/piicharpa/ADMIN-TGO/app/(main)/page.tsx"],
+          page: [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 8260)), "/Users/piicharpa/ADMIN-TGO/app/(main)/page.tsx"],
           
         }]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 7293)), "/Users/piicharpa/ADMIN-TGO/app/(main)/layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3781)), "/Users/piicharpa/ADMIN-TGO/app/(main)/layout.tsx"],
           metadata: {
-    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9297))).default(props))],
+    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3174))).default(props))],
     apple: [],
     openGraph: [],
     twitter: [],
@@ -225,9 +225,9 @@ __webpack_require__.r(__webpack_exports__);
       ]
       },
         {
-          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 246)), "/Users/piicharpa/ADMIN-TGO/app/layout.tsx"],
+          'layout': [() => Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 729)), "/Users/piicharpa/ADMIN-TGO/app/layout.tsx"],
           metadata: {
-    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 9297))).default(props))],
+    icon: [(async (props) => (await Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 3174))).default(props))],
     apple: [],
     openGraph: [],
     twitter: [],
@@ -250,14 +250,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 8649:
+/***/ 1821:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 2737))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1540))
 
 /***/ }),
 
-/***/ 2737:
+/***/ 1540:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -271,22 +271,23 @@ __webpack_require__.d(__webpack_exports__, {
 
 // EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
 var jsx_runtime_ = __webpack_require__(6786);
-// EXTERNAL MODULE: ./node_modules/.pnpm/primereact@10.2.1_@types+react@18.2.12_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/primereact/button/button.cjs.js
-var button_cjs = __webpack_require__(996);
-// EXTERNAL MODULE: ./node_modules/.pnpm/primereact@10.2.1_@types+react@18.2.12_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/primereact/column/column.cjs.js
-var column_cjs = __webpack_require__(5198);
-// EXTERNAL MODULE: ./node_modules/.pnpm/primereact@10.2.1_@types+react@18.2.12_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/primereact/datatable/datatable.cjs.js
-var datatable_cjs = __webpack_require__(5313);
-// EXTERNAL MODULE: ./node_modules/.pnpm/primereact@10.2.1_@types+react@18.2.12_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/primereact/dialog/dialog.cjs.js
-var dialog_cjs = __webpack_require__(1101);
+// EXTERNAL MODULE: ./node_modules/primereact/button/button.cjs.js
+var button_cjs = __webpack_require__(8176);
+// EXTERNAL MODULE: ./node_modules/primereact/column/column.cjs.js
+var column_cjs = __webpack_require__(9210);
+// EXTERNAL MODULE: ./node_modules/primereact/datatable/datatable.cjs.js
+var datatable_cjs = __webpack_require__(4760);
+// EXTERNAL MODULE: ./node_modules/primereact/dialog/dialog.cjs.js
+var dialog_cjs = __webpack_require__(6120);
 // EXTERNAL MODULE: external "next/dist/compiled/react"
 var react_ = __webpack_require__(8038);
 ;// CONCATENATED MODULE: ./demo/service/DashboardService.tsx
-const API_URL = "http://178.128.123.212:5000/api/v1/admin/dashboard";
+const API_URL = "http://178.128.123.212:5000/api/v1/";
+const URL = `${API_URL}admin/dashboard`;
 const DashboardService = {
     get: async ()=>{
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(URL, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json"
@@ -305,7 +306,7 @@ const DashboardService = {
 };
 
 // EXTERNAL MODULE: ./layout/context/layoutcontext.tsx
-var layoutcontext = __webpack_require__(4404);
+var layoutcontext = __webpack_require__(6538);
 ;// CONCATENATED MODULE: ./app/(main)/page.tsx
 /* __next_internal_client_entry_do_not_use__ default auto */ 
 
@@ -550,7 +551,7 @@ const Dashboard = ()=>{
 
 /***/ }),
 
-/***/ 7352:
+/***/ 8260:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -560,7 +561,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   __esModule: () => (/* binding */ __esModule),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2061);
+/* harmony import */ var next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1313);
 
 const proxy = (0,next_dist_build_webpack_loaders_next_flight_loader_module_proxy__WEBPACK_IMPORTED_MODULE_0__.createProxy)(String.raw`/Users/piicharpa/ADMIN-TGO/app/(main)/page.tsx`)
 
@@ -583,7 +584,7 @@ const __default__ = proxy.default;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [880,773,963,882,740,211,307], () => (__webpack_exec__(196)));
+var __webpack_exports__ = __webpack_require__.X(0, [763,504,977,450,267,360,128], () => (__webpack_exec__(7642)));
 module.exports = __webpack_exports__;
 
 })();

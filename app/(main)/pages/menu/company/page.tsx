@@ -1,4 +1,6 @@
+
 "use client";
+import React from "react";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -7,9 +9,10 @@ import { InputText } from "primereact/inputtext";
 import { Toast } from "primereact/toast";
 import { useEffect, useRef, useState } from "react";
 import { CompanyService } from "@/demo/service/CompanyService";
+import AddEditDialog from "@/app/(full-page)/component/dialog/company";
 import type { Demo } from "@/types";
 
-type Company = Demo.Company;
+type Company = Demo.CompanyDetail;
 
 const CompanyPage = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
@@ -17,12 +20,75 @@ const CompanyPage = () => {
   const [viewDialog, setViewDialog] = useState(false);
   const [globalFilter] = useState("");
   const [nameFilter, setNameFilter] = useState("");
-  
+  const [dialogVisible, setDialogVisible] = React.useState(false);
+  const [passwordData, setPasswordData] = React.useState({
+    password: "",
+    confirmPassword: "",
+  });
+  const [submitted, setSubmitted] = React.useState(false);
+
   const toast = useRef<Toast>(null);
 
   const filteredCompany = companies.filter((company) =>
     company.name.toLowerCase().includes(nameFilter.toLowerCase())
   );
+
+  const actionBodyTemplate = (rowData: Company) => (
+    <div className="flex gap-1">
+      <Button
+        icon="pi pi-eye"
+        rounded
+        severity="info"
+        onClick={() => {
+          setSelectedCompany(rowData);
+          setViewDialog(true);
+        }}
+      />
+      <Button
+        icon="pi pi-pencil"
+        className="p-button-rounded p-button-success"
+        onClick={() => {
+          setSelectedCompany(rowData);
+          setDialogVisible(true);
+          setSubmitted(false);
+          setPasswordData({ password: "", confirmPassword: "" });
+        }}
+      />
+    </div>
+  );
+
+  const handleSavePassword = (password: string) => {
+    setSubmitted(true);
+    if (
+      passwordData.password &&
+      passwordData.password === passwordData.confirmPassword &&
+      selectedCompany
+    ) {
+      // CompanyService.updatePasswordByCompanyName(selectedCompany.name, password)
+      CompanyService.updatePasswordByCompanyName(selectedCompany.name, password)
+
+        .then(() => {
+          toast.current?.show({
+            severity: "success",
+            summary: "Success",
+            detail: "เปลี่ยนรหัสผ่านเรียบร้อย",
+            life: 3000,
+          });
+          setDialogVisible(false);
+        })
+        .catch((error) => {
+          toast.current?.show({
+            severity: "error",
+            summary: "Error",
+            detail: "ไม่สามารถเปลี่ยนรหัสผ่านได้",
+            life: 3000,
+          });
+          console.error("Failed to update password:", error);
+        });
+    } else if (!selectedCompany) {
+      console.error("No company selected. Cannot update password.");
+    }
+  };
 
   useEffect(() => {
     CompanyService.getCompanies()
@@ -71,19 +137,11 @@ const CompanyPage = () => {
             <Column field="address" header="ที่อยู่" sortable />
             <Column field="id" header="รหัส" sortable />
             <Column
-              body={(rowData) => (
-                <Button
-                  icon="pi pi-eye"
-                  rounded
-                  severity="info"
-                  className="mr-2"
-                  onClick={() => {
-                    setSelectedCompany(rowData);
-                    setViewDialog(true);
-                  }}
-                />
-              )}
-            />
+              body={actionBodyTemplate}
+              header="การดำเนินการ"
+              headerStyle={{ width: "100px" }}
+              bodyStyle={{ textAlign: "center" }}
+            ></Column>
           </DataTable>
 
           <Dialog
@@ -112,10 +170,28 @@ const CompanyPage = () => {
                   <Column field="id" header="รหัสผลิตภัณฑ์" sortable />
                   <Column field="name" header="ชื่อผลิตภัณฑ์" sortable />
                   <Column field="status" header="สถานะ" sortable />
+                  <Column
+                    field="actions"
+                    header="การจัดการ"
+                    body={actionBodyTemplate}
+                    style={{ width: "10rem" }}
+                  />
                 </DataTable>
               </>
             )}
           </Dialog>
+
+          <AddEditDialog
+            visible={dialogVisible}
+            onHide={() => {
+              setDialogVisible(false);
+              setSubmitted(false);
+            }}
+            onSave={handleSavePassword}
+            passwordData={passwordData}
+            setPasswordData={setPasswordData}
+            submitted={submitted}
+          />
         </div>
       </div>
     </div>
@@ -123,3 +199,4 @@ const CompanyPage = () => {
 };
 
 export default CompanyPage;
+

@@ -2,12 +2,13 @@ import type { Demo } from "@/types";
 type Dashboard = Demo.Dashboard;
 type CompanyDetail = Demo.CompanyDetail;
 
-const API_URL = 'http://178.128.123.212:5000/api/v1/admin/dashboard';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}admin/dashboard`;
 
 export const DashboardService = {
     get: async (): Promise<Dashboard> => {
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(URL, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

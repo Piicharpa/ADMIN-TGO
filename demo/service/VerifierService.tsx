@@ -26,10 +26,10 @@ type Verifier = {
   prefix_name: string;
 };
 
-// Use a base URL to make the code more flexible and easier to manage.
-const BASE_URL = "http://178.128.123.212:5000/api/v1";
 
-const VERIFIER_URL = `${BASE_URL}/auditor`; // Singular for managing a specific verifier
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const URL = `${API_URL}auditor`;
 
 /**
  * Maps API response data to a local Verifier type.
@@ -84,7 +84,7 @@ export const VerifierService = {
    * @returns A promise that resolves to an array of Verifier objects.
    */
   getVerifiers() {
-    return fetch(VERIFIER_URL, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(URL, { headers: { "Cache-Control": "no-cache" } })
       .then(res => {
         if (!res.ok) {
           return Promise.reject(res);
@@ -100,7 +100,7 @@ export const VerifierService = {
    * @returns A promise that resolves to a single Verifier object.
    */
   getVerifierById(id: number) {
-    return fetch(`${VERIFIER_URL}/${id}`, { headers: { "Cache-Control": "no-cache" } })
+    return fetch(`${URL}/${id}`, { headers: { "Cache-Control": "no-cache" } })
       .then(res => {
         if (!res.ok) {
           return Promise.reject(res);
@@ -118,7 +118,7 @@ export const VerifierService = {
    */
   createVerifier(verifier: Verifier) {
     const formattedVerifier = formatVerifierDates(verifier);
-    return fetch(VERIFIER_URL, {
+    return fetch(URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formattedVerifier),
@@ -140,7 +140,7 @@ export const VerifierService = {
    */
   updateVerifier(verifier: Verifier) {
     const formattedVerifier = formatVerifierDates(verifier);
-    return fetch(`${VERIFIER_URL}/${verifier.auditor_id}`, {
+    return fetch(`${URL}/${verifier.auditor_id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formattedVerifier),
@@ -160,7 +160,7 @@ export const VerifierService = {
    * @returns A promise that resolves when the deletion is successful.
    */
   deleteVerifier(id: number) {
-    return fetch(`${VERIFIER_URL}/${id}`, { method: 'DELETE' })
+    return fetch(`${URL}/${id}`, { method: 'DELETE' })
       .then(res => {
         if (!res.ok) {
           return Promise.reject(res);
