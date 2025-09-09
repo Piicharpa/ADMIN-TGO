@@ -6,7 +6,7 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production', // ลบ console.log ในโหมด production
   },
-  basePath: '/admin', // หรือชื่อโฟลเดอร์ที่คุณจะใช้
+  // basePath: '/admin', // หรือชื่อโฟลเดอร์ที่คุณจะใช้
 };
 
 module.exports = nextConfig;
