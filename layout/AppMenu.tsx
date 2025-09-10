@@ -12,7 +12,7 @@ const AppMenu = () => {
     const model: AppMenuItem[] = [
         {
             label: '',
-            items: [{ label: 'หน้าหลัก', icon: 'pi pi-fw pi-home', to: '/' },
+            items: [{ label: 'หน้าหลัก', icon: 'pi pi-fw pi-home', to: '/pages/dashboard' },
                     { label: 'จัดการข้อมูล', icon: 'pi pi-fw pi-list', to: '/pages/manage_info' },
                     { label: 'จัดการผู้ทวนสอบ', icon: 'pi pi-fw pi-id-card', to: '/pages/verifier' },
                     { label: 'จัดการผู้ใช้งาน/บริษัท', icon: 'pi pi-fw pi-building', to: '/pages/company' }

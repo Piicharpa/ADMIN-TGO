@@ -253,35 +253,278 @@ __webpack_require__.r(__webpack_exports__);
 /***/ 1821:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 1540))
+Promise.resolve(/* import() eager */).then(__webpack_require__.bind(__webpack_require__, 5684))
 
 /***/ }),
 
-/***/ 1540:
+/***/ 5684:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6786);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var primereact_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8176);
+/* harmony import */ var primereact_column__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9210);
+/* harmony import */ var primereact_datatable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4760);
+/* harmony import */ var primereact_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6120);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8038);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _demo_service_DashboardService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(301);
+/* harmony import */ var _layout_context_layoutcontext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6538);
+/* __next_internal_client_entry_do_not_use__ default auto */ 
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ page)
-});
 
-// EXTERNAL MODULE: external "next/dist/compiled/react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__(6786);
-// EXTERNAL MODULE: ./node_modules/primereact/button/button.cjs.js
-var button_cjs = __webpack_require__(8176);
-// EXTERNAL MODULE: ./node_modules/primereact/column/column.cjs.js
-var column_cjs = __webpack_require__(9210);
-// EXTERNAL MODULE: ./node_modules/primereact/datatable/datatable.cjs.js
-var datatable_cjs = __webpack_require__(4760);
-// EXTERNAL MODULE: ./node_modules/primereact/dialog/dialog.cjs.js
-var dialog_cjs = __webpack_require__(6120);
-// EXTERNAL MODULE: external "next/dist/compiled/react"
-var react_ = __webpack_require__(8038);
-;// CONCATENATED MODULE: ./demo/service/DashboardService.tsx
+
+
+
+
+
+const Dashboard = ()=>{
+    const [dashboard, setDashboard] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const [viewDialog, setViewDialog] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [selectedCompany, setSelectedCompany] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null);
+    const { layoutConfig } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_layout_context_layoutcontext__WEBPACK_IMPORTED_MODULE_3__/* .LayoutContext */ .V);
+    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(()=>{
+        _demo_service_DashboardService__WEBPACK_IMPORTED_MODULE_2__/* .DashboardService */ .s.get().then((data)=>setDashboard(data)).catch((err)=>console.error("Error fetching dashboard:", err));
+    }, []);
+    const companyDialogFooter = /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
+        label: "Close",
+        icon: "pi pi-times",
+        onClick: ()=>setViewDialog(false),
+        className: "p-button-text"
+    });
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+        className: "grid",
+        children: [
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "col-12 lg:col-6 xl:col-3",
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                    className: "card mb-0",
+                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "flex justify-content-between mb-3",
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                        className: "block text-500 font-medium mb-3",
+                                        children: "ผู้ดูแลระบบ"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                        className: "text-900 font-medium text-md",
+                                        children: "นางสาวกัญญลักษณ์ ธนสุนทรวงศ์"
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "flex align-items-center justify-content-center bg-blue-100 border-round",
+                                style: {
+                                    width: "2.5rem",
+                                    height: "2.5rem"
+                                },
+                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
+                                    className: "pi pi-pencil text-blue-500 text-xl"
+                                })
+                            })
+                        ]
+                    })
+                })
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "col-12 lg:col-6 xl:col-3",
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                    className: "card mb-0",
+                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "flex justify-content-between mb-3",
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                        className: "block text-500 font-medium mb-3",
+                                        children: "จำนวนบริษัททั้งหมด"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                        className: "text-900 font-medium text-xl",
+                                        children: dashboard?.company_total ?? "..."
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "flex align-items-center justify-content-center bg-orange-100 border-round",
+                                style: {
+                                    width: "2.5rem",
+                                    height: "2.5rem"
+                                },
+                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
+                                    className: "pi pi-building text-orange-500 text-xl"
+                                })
+                            })
+                        ]
+                    })
+                })
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "col-12 lg:col-6 xl:col-3",
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                    className: "card mb-0",
+                    children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "flex justify-content-between mb-3",
+                        children: [
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                        className: "block text-500 font-medium mb-3",
+                                        children: "จำนวนผลิตภัณฑ์ทั้งหมด"
+                                    }),
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                        className: "text-900 font-medium text-xl",
+                                        children: dashboard?.product_total ?? "..."
+                                    })
+                                ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "flex align-items-center justify-content-center bg-cyan-100 border-round",
+                                style: {
+                                    width: "2.5rem",
+                                    height: "2.5rem"
+                                },
+                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("i", {
+                                    className: "pi pi-inbox text-cyan-500 text-xl"
+                                })
+                            })
+                        ]
+                    })
+                })
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "col-12 full",
+                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    className: "card",
+                    children: [
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h5", {
+                            children: "Company list"
+                        }),
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(primereact_datatable__WEBPACK_IMPORTED_MODULE_5__/* .DataTable */ .w, {
+                            value: dashboard?.company_detail || [],
+                            rows: 5,
+                            paginator: true,
+                            responsiveLayout: "scroll",
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_6__/* .Column */ .s, {
+                                    field: "name",
+                                    header: "ชื่อบริษัท",
+                                    sortable: true,
+                                    style: {
+                                        width: "35%"
+                                    }
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_6__/* .Column */ .s, {
+                                    field: "industrial_name",
+                                    header: "ประเภทอุตสาหรรม",
+                                    sortable: true,
+                                    style: {
+                                        width: "35%"
+                                    }
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_6__/* .Column */ .s, {
+                                    header: "จำนวนผลิตภัณฑ์",
+                                    body: (data)=>data.product_count
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_column__WEBPACK_IMPORTED_MODULE_6__/* .Column */ .s, {
+                                    body: (rowData)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_button__WEBPACK_IMPORTED_MODULE_4__.Button, {
+                                            icon: "pi pi-eye",
+                                            rounded: true,
+                                            severity: "info",
+                                            onClick: ()=>{
+                                                setSelectedCompany(rowData);
+                                                setViewDialog(true);
+                                            }
+                                        })
+                                })
+                            ]
+                        })
+                    ]
+                })
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(primereact_dialog__WEBPACK_IMPORTED_MODULE_7__/* .Dialog */ .V, {
+                header: "Company Detail",
+                visible: viewDialog,
+                style: {
+                    width: "50vw"
+                },
+                footer: companyDialogFooter,
+                onHide: ()=>setViewDialog(false),
+                children: selectedCompany ? /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    className: "p-4 space-y-2 border rounded shadow",
+                    children: [
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("strong", {
+                                    children: "ชื่อบริษัท:"
+                                }),
+                                " ",
+                                selectedCompany.name ?? "-"
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("strong", {
+                                    children: "ประเภทอุตสาหกรรม:"
+                                }),
+                                " ",
+                                selectedCompany.industrial_name ?? "-"
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("strong", {
+                                    children: "จำนวนผลิตภัณฑ์:"
+                                }),
+                                " ",
+                                selectedCompany.product_count ?? "-"
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("strong", {
+                                    children: "ที่อยู่:"
+                                }),
+                                " ",
+                                selectedCompany.address ?? "-"
+                            ]
+                        }),
+                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
+                            children: [
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("strong", {
+                                    children: "เบอร์โทร:"
+                                }),
+                                " ",
+                                selectedCompany.contact_no ?? "-"
+                            ]
+                        })
+                    ]
+                }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("p", {
+                    children: "Loading..."
+                })
+            })
+        ]
+    });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dashboard);
+
+
+/***/ }),
+
+/***/ 301:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   s: () => (/* binding */ DashboardService)
+/* harmony export */ });
 const API_URL = "http://178.128.123.212:5000/api/v1/";
 const URL = `${API_URL}admin/dashboard`;
 const DashboardService = {
@@ -304,249 +547,6 @@ const DashboardService = {
         }
     }
 };
-
-// EXTERNAL MODULE: ./layout/context/layoutcontext.tsx
-var layoutcontext = __webpack_require__(6538);
-;// CONCATENATED MODULE: ./app/(main)/page.tsx
-/* __next_internal_client_entry_do_not_use__ default auto */ 
-
-
-
-
-
-
-
-const Dashboard = ()=>{
-    const [dashboard, setDashboard] = (0,react_.useState)(null);
-    const [viewDialog, setViewDialog] = (0,react_.useState)(false);
-    const [selectedCompany, setSelectedCompany] = (0,react_.useState)(null);
-    const { layoutConfig } = (0,react_.useContext)(layoutcontext/* LayoutContext */.V);
-    (0,react_.useEffect)(()=>{
-        DashboardService.get().then((data)=>setDashboard(data)).catch((err)=>console.error("Error fetching dashboard:", err));
-    }, []);
-    const companyDialogFooter = /*#__PURE__*/ jsx_runtime_.jsx(button_cjs.Button, {
-        label: "Close",
-        icon: "pi pi-times",
-        onClick: ()=>setViewDialog(false),
-        className: "p-button-text"
-    });
-    return /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-        className: "grid",
-        children: [
-            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                className: "col-12 lg:col-6 xl:col-3",
-                children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                    className: "card mb-0",
-                    children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                        className: "flex justify-content-between mb-3",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                        className: "block text-500 font-medium mb-3",
-                                        children: "ผู้ดูแลระบบ"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                        className: "text-900 font-medium text-md",
-                                        children: "นางสาวกัญญลักษณ์ ธนสุนทรวงศ์"
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                className: "flex align-items-center justify-content-center bg-blue-100 border-round",
-                                style: {
-                                    width: "2.5rem",
-                                    height: "2.5rem"
-                                },
-                                children: /*#__PURE__*/ jsx_runtime_.jsx("i", {
-                                    className: "pi pi-pencil text-blue-500 text-xl"
-                                })
-                            })
-                        ]
-                    })
-                })
-            }),
-            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                className: "col-12 lg:col-6 xl:col-3",
-                children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                    className: "card mb-0",
-                    children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                        className: "flex justify-content-between mb-3",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                        className: "block text-500 font-medium mb-3",
-                                        children: "จำนวนบริษัททั้งหมด"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                        className: "text-900 font-medium text-xl",
-                                        children: dashboard?.company_total ?? "..."
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                className: "flex align-items-center justify-content-center bg-orange-100 border-round",
-                                style: {
-                                    width: "2.5rem",
-                                    height: "2.5rem"
-                                },
-                                children: /*#__PURE__*/ jsx_runtime_.jsx("i", {
-                                    className: "pi pi-building text-orange-500 text-xl"
-                                })
-                            })
-                        ]
-                    })
-                })
-            }),
-            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                className: "col-12 lg:col-6 xl:col-3",
-                children: /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                    className: "card mb-0",
-                    children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                        className: "flex justify-content-between mb-3",
-                        children: [
-                            /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                                children: [
-                                    /*#__PURE__*/ jsx_runtime_.jsx("span", {
-                                        className: "block text-500 font-medium mb-3",
-                                        children: "จำนวนผลิตภัณฑ์ทั้งหมด"
-                                    }),
-                                    /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                        className: "text-900 font-medium text-xl",
-                                        children: dashboard?.product_total ?? "..."
-                                    })
-                                ]
-                            }),
-                            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                                className: "flex align-items-center justify-content-center bg-cyan-100 border-round",
-                                style: {
-                                    width: "2.5rem",
-                                    height: "2.5rem"
-                                },
-                                children: /*#__PURE__*/ jsx_runtime_.jsx("i", {
-                                    className: "pi pi-inbox text-cyan-500 text-xl"
-                                })
-                            })
-                        ]
-                    })
-                })
-            }),
-            /*#__PURE__*/ jsx_runtime_.jsx("div", {
-                className: "col-12 full",
-                children: /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                    className: "card",
-                    children: [
-                        /*#__PURE__*/ jsx_runtime_.jsx("h5", {
-                            children: "Company list"
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)(datatable_cjs/* DataTable */.w, {
-                            value: dashboard?.company_detail || [],
-                            rows: 5,
-                            paginator: true,
-                            responsiveLayout: "scroll",
-                            children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx(column_cjs/* Column */.s, {
-                                    field: "name",
-                                    header: "ชื่อบริษัท",
-                                    sortable: true,
-                                    style: {
-                                        width: "35%"
-                                    }
-                                }),
-                                /*#__PURE__*/ jsx_runtime_.jsx(column_cjs/* Column */.s, {
-                                    field: "industrial_name",
-                                    header: "ประเภทอุตสาหรรม",
-                                    sortable: true,
-                                    style: {
-                                        width: "35%"
-                                    }
-                                }),
-                                /*#__PURE__*/ jsx_runtime_.jsx(column_cjs/* Column */.s, {
-                                    header: "จำนวนผลิตภัณฑ์",
-                                    body: (data)=>data.product_count
-                                }),
-                                /*#__PURE__*/ jsx_runtime_.jsx(column_cjs/* Column */.s, {
-                                    body: (rowData)=>/*#__PURE__*/ jsx_runtime_.jsx(button_cjs.Button, {
-                                            icon: "pi pi-eye",
-                                            rounded: true,
-                                            severity: "info",
-                                            onClick: ()=>{
-                                                setSelectedCompany(rowData);
-                                                setViewDialog(true);
-                                            }
-                                        })
-                                })
-                            ]
-                        })
-                    ]
-                })
-            }),
-            /*#__PURE__*/ jsx_runtime_.jsx(dialog_cjs/* Dialog */.V, {
-                header: "Company Detail",
-                visible: viewDialog,
-                style: {
-                    width: "50vw"
-                },
-                footer: companyDialogFooter,
-                onHide: ()=>setViewDialog(false),
-                children: selectedCompany ? /*#__PURE__*/ (0,jsx_runtime_.jsxs)("div", {
-                    className: "p-4 space-y-2 border rounded shadow",
-                    children: [
-                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
-                            children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx("strong", {
-                                    children: "ชื่อบริษัท:"
-                                }),
-                                " ",
-                                selectedCompany.name ?? "-"
-                            ]
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
-                            children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx("strong", {
-                                    children: "ประเภทอุตสาหกรรม:"
-                                }),
-                                " ",
-                                selectedCompany.industrial_name ?? "-"
-                            ]
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
-                            children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx("strong", {
-                                    children: "จำนวนผลิตภัณฑ์:"
-                                }),
-                                " ",
-                                selectedCompany.product_count ?? "-"
-                            ]
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
-                            children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx("strong", {
-                                    children: "ที่อยู่:"
-                                }),
-                                " ",
-                                selectedCompany.address ?? "-"
-                            ]
-                        }),
-                        /*#__PURE__*/ (0,jsx_runtime_.jsxs)("p", {
-                            children: [
-                                /*#__PURE__*/ jsx_runtime_.jsx("strong", {
-                                    children: "เบอร์โทร:"
-                                }),
-                                " ",
-                                selectedCompany.contact_no ?? "-"
-                            ]
-                        })
-                    ]
-                }) : /*#__PURE__*/ jsx_runtime_.jsx("p", {
-                    children: "Loading..."
-                })
-            })
-        ]
-    });
-};
-/* harmony default export */ const page = (Dashboard);
 
 
 /***/ }),
