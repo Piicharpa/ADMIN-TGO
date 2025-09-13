@@ -33,10 +33,10 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
       <div className="flex items-center">
         <div
           className="flex items-center justify-center cursor-pointer"
-          style={{ width: "8rem", height: "5rem" }}
+          style={{ width: "4rem", height: "4rem" }}
         >
           <img
-            src="/img/Logo.png"
+            src="/img/favicon_admin.png"
             alt="Company Logo"
             className="h-full w-full object-contain p-2"
           />

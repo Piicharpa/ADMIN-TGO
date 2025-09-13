@@ -15,13 +15,11 @@ export const metadata: Metadata = {
     openGraph: {
         type: 'website',
         title: 'ADMIN TGO',
-        url: 'https://sakai.primereact.org/',
         description: 'The ultimate collection of design-agnostic, flexible and accessible React UI Components.',
-        images: ['https://www.primefaces.org/static/social/sakai-react.png'],
         ttl: 604800
     },
     icons: {
-        icon: '/favicon.ico'
+        icon: '/favicon_cbam.ico'
     }
 };
 

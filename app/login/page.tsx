@@ -28,7 +28,6 @@ const LoginPage = () => {
 
   return (
     <div className="flex min-h-screen bg-gradient-to-tr from-green-200 via-blue-100 to-blue-200">
-      {/* Left Side */}
       <div className="hidden md:flex md:w-1/2 flex-col justify-center items-center text-center p-16 bg-gradient-to-br from-green-400 to-blue-500 text-white">
         <img
           src="img/Contact us-rafiki.png"
