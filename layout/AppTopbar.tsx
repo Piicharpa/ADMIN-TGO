@@ -25,6 +25,7 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
   }));
 
  const handleQuit = () => {
+  localStorage.removeItem("user_account");
   window.location.assign("/cfp/login");
 };
 
