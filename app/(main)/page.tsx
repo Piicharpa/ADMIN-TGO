@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 
 const Dashboard = () => {
-  console.log(localStorage);
+  // console.log(localStorage);
 
   const router = useRouter();
     useEffect(() => {
