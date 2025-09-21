@@ -9,6 +9,20 @@ import { Demo } from "@/types";
 
 
 const Dashboard = () => {
+    useEffect(() => {
+  const user_account = localStorage.getItem("user_account");
+  if (!user_account) {
+    window.location.assign("/cfp/login");
+    return;
+  }
+
+  const userObj = JSON.parse(user_account);
+
+  if (!userObj.token) {
+    window.location.assign("/cfp/login");
+  }
+}, []);
+  
   const [dashboard, setDashboard] = useState<Demo.Dashboard | null>(null);
   const [viewDialog, setViewDialog] = useState(false);
   const [selectedCompany, setSelectedCompany] =

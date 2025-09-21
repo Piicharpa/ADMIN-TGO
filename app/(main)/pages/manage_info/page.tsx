@@ -10,7 +10,6 @@ import { Toast } from 'primereact/toast';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { Demo } from '@/types';
-import { useRouter } from 'next/navigation';
 import Register_round from '../round/page';
 import Unit from '../unit/page';
 import Industrial from '../industrial/page';
@@ -18,6 +17,19 @@ import TGO from '../ef/page';
 import PCR from '../pcr/page';
 
 const Crud = () => {
+      useEffect(() => {
+  const user_account = localStorage.getItem("user_account");
+  if (!user_account) {
+    window.location.assign("/cfp/login");
+    return;
+  }
+
+  const userObj = JSON.parse(user_account);
+
+  if (!userObj.token) {
+    window.location.assign("/cfp/login");
+  }
+}, []);
     // Product related state and functions
     let emptyProduct: Demo.Product = {
         id: '',
@@ -33,7 +45,7 @@ const Crud = () => {
 
     // State for active menu/content
     const [activeContent, setActiveContent] = useState('register_round');
-    const router = useRouter();
+
     const [products, setProducts] = useState(null);
     const [productDialog, setProductDialog] = useState(false);
     const [deleteProductDialog, setDeleteProductDialog] = useState(false);

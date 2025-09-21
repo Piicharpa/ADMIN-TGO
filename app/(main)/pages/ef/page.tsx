@@ -12,6 +12,19 @@ import type { Demo } from "@/types";
 type Ef = Demo.Ef;
 
 const TGO = () => {
+  useEffect(() => {
+  const user_account = localStorage.getItem("user_account");
+  if (!user_account) {
+    window.location.assign("/cfp/login");
+    return;
+  }
+
+  const userObj = JSON.parse(user_account);
+
+  if (!userObj.token) {
+    window.location.assign("/cfp/login");
+  }
+}, []);
   let emptyEf: Ef = {
     ef_id: 0,
     item: "",

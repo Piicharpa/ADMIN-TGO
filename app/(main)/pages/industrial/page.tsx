@@ -13,6 +13,19 @@ import { IndustrialService } from "@/demo/service/IndustrialService";
 type Industrial = Demo.Industrial;
 
 const IndustrialPage = () => {
+  useEffect(() => {
+  const user_account = localStorage.getItem("user_account");
+  if (!user_account) {
+    window.location.assign("/cfp/login");
+    return;
+  }
+
+  const userObj = JSON.parse(user_account);
+
+  if (!userObj.token) {
+    window.location.assign("/cfp/login");
+  }
+}, []);
   const [industrials, setIndustrials] = useState<Industrial[]>([]);
   const [industrial, setIndustrial] = useState<Industrial | null>(null);
   const [selectedIndustrials, setSelectedIndustrials] = useState<

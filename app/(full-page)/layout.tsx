@@ -15,10 +15,11 @@ export const metadata: Metadata = {
 };
 
 export default function SimpleLayout({ children }: SimpleLayoutProps) {
-    return (
-        <React.Fragment>
-            {children}
-            <AppConfig simple />
-        </React.Fragment>
-    );
+
+  return (
+    <React.Fragment>
+      {children}
+      <AppConfig simple />
+    </React.Fragment>
+  );
 }

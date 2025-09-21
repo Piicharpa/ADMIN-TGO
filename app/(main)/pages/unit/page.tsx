@@ -13,6 +13,20 @@ import type { Demo } from "@/types";
 type Unit = Demo.Unit;
 
 const UnitPage = () => {
+  
+  useEffect(() => {
+  const user_account = localStorage.getItem("user_account");
+  if (!user_account) {
+    window.location.assign("/cfp/login");
+    return;
+  }
+
+  const userObj = JSON.parse(user_account);
+
+  if (!userObj.token) {
+    window.location.assign("/cfp/login");
+  }
+}, []);
   const [units, setUnits] = useState<Unit[]>([]);
   const [unit, setUnit] = useState<Unit | null>(null);
   const [selectedUnits, setSelectedUnits] = useState<Unit[] | null>(null);

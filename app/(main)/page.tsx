@@ -7,9 +7,27 @@ import React, { useContext, useEffect, useState } from "react";
 import { DashboardService } from "@/demo/service/DashboardService";
 import { LayoutContext } from "../../layout/context/layoutcontext";
 import { Demo } from "@/types";
+import { useRouter } from "next/navigation";
 
 
 const Dashboard = () => {
+  console.log(localStorage);
+
+  const router = useRouter();
+    useEffect(() => {
+  const user_account = localStorage.getItem("user_account");
+  if (!user_account) {
+    window.location.assign("/cfp/login");
+    return;
+  }
+
+  const userObj = JSON.parse(user_account);
+
+  if (!userObj.token) {
+    window.location.assign("/cfp/login");
+  }
+}, []);
+
   const [dashboard, setDashboard] = useState<Demo.Dashboard | null>(null);
   const [viewDialog, setViewDialog] = useState(false);
   const [selectedCompany, setSelectedCompany] =
